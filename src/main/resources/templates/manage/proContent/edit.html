@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <th:block th:include="include :: header('文学创作内容修改')"/>
+    <style type="text/css">
+        .img-social-content {
+            height:40px;
+            width: 40px;
+            margin-right: 10px;
+        }
+        .img-circle{border-radius:50%}
+        .pull-left {
+            float: left !important;
+        }
+        .insta-color{
+            color:#ff5135!important;
+        }
+        .alertClass{
+            border-color: #ff0000;
+        }
+        .layui-flex-row{
+            display: flex;
+            flex-display: row;
+            -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+        }
+        .layui-align-center{
+
+            align-items: center;
+        }
+        .layui-justify-content{
+
+            justify-content: center;
+            -webkit-justify-content: center;
+        }
+        .text-blue{
+            color: #0e82ff;
+        }
+        .layui-input-a {
+            border-style: none;
+        }
+
+        .title{
+            font-size: 20px;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        label.layui-form-label{
+            width: 110px;
+        }
+        div.layui-form-item{
+            width: 50%;
+        }
+        .layui-flex-wrap{
+            flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
+            -webkit-flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action=""  th:object="${ProContent}">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+				<div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="*{no}" name="no" lay-verify="title"
+                               autocomplete="off" class="layui-input">
+                        <span name="adopt" th:text="*{adopt}"></span>
+                        <span name="charpId" th:text="*{charpId}"></span>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="*{charpId}" name="charpId"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="*{adopt}" name="adopt"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+
+
+
+                    <div class="panel-body">
+                        <p class="title">
+                            <span th:text="*{title}"></span>
+                        </p>
+                        <div class="layui-flex-row layui-align-center layui-justify-content">
+                            <img style="height: 40px;width: 40px" th:src="*{avatar}">
+                            <span th:text="*{nickname}"></span>
+                        </div>
+                        <div>
+                            <span style="white-space:pre-line;line-height: 30px" th:text="*{content}"></span>
+                        </div>
+                        <div class="social-header layui-flex-row layui-align-center" style="margin-top:20px">
+                            <a href="#" class="insta-color">
+                                <span class="layui-icon layui-icon-heart-fill " ></span> <span style="color: #b4b3b3;font-size: 10px" th:text="*{likes}"></span>
+                            </a><span style="color: #b4b3b3;font-size: 10px">喜欢</span>
+                            <a href="#" class="" style="margin-left: 10px">
+                                <span class="layui-icon layui-icon-reply-fill" style="color: #333333"></span>  <span style="color: #b4b3b3;font-size: 10px" th:text="*{recomNo}"></span>
+                            </a><span  style="color: #b4b3b3;font-size: 10px">推荐</span>
+                        </div>
+                        </p>
+                        <hr>
+                        <div class="social-content">
+
+                            <ul  id="comments" name="comments">
+
+                            </ul>
+
+
+                        </div>
+
+
+                            <ul class="layui-align-center layui-justify-content layui-flex-row">
+                                <li><a class="text-blue" style="margin-right: 10px;" onclick="queryComments(0)">&laquo;上一页</a></li>
+                                <li><a class="text-blue" style= "margin-left: 10px;" onclick="queryComments(1)">下一页&raquo;</a></li>
+                            </ul>
+
+                        <br>
+                        <br>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+       <!--     <th:block  th:if="${adopt ne '1'}">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit=""
+                    lay-filter="proContent-adopt">
+                <i class="layui-icon layui-icon-ok"></i>
+				采纳
+            </button>
+            </th:block>-->
+            <button type="submit" class="layui-btn layui-btn-primary layui-btn-sm" lay-submit=""
+                lay-filter="proContent-cancel">
+                <i class="layui-icon layui-icon-refresh"></i>
+				取消
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    var dataUrl = rootPath+"/ProRecomController/queryRecom";
+    var paramData={
+        startIndex:0,
+        pageSize:10,
+        no:"[[${ProContent.no}]]"
+    }
+    var noData = false;
+    var noFlash = false;
+    var dataList=[];
+    $(function(){
+        queryComments(1);
+    });
+
+    layui.use(['form','laydate','jquery'], function () {
+        let form = layui.form;
+        //let $ = layui.jquery;
+        let MODULE_PATH = rootPath+"/ProContentController/";
+
+		var laydate = layui.laydate;
+        //同时绑定多个
+        lay('.datetime-input').each(function(){
+          laydate.render({
+            elem: this
+            ,trigger: 'click'
+            ,type: 'datetime'
+          });
+        });
+
+
+
+
+        form.on('submit(proContent-adopt)', function (data) {
+            if(data.field['adopt']==1){
+                layer.msg("作品已采纳，不可操作", {icon: 2, time: 1000});
+                return false;
+            }
+            layer.confirm('确定要采纳该创作', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "adopt",
+                    dataType: 'json',
+                    type: 'post',
+                    data:{
+                        no:paramData.no,
+                        charpId:data.field['charpId']
+                    },
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg("作品已采纳", {icon: 1, time: 1000}, function () {
+                                parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    },
+                    fail:function (){
+                        layer.close(loading);
+                    }
+                })
+            });
+            return false;
+        });
+        form.on('submit(proContent-cancel)', function (data) {
+            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+        })
+    })
+
+
+    //添加
+    function queryComments(type) {
+
+        if(type==0){//上一页
+            if(paramData.startIndex>=10) {
+                paramData.startIndex -= paramData.pageSize;
+            }else{
+                return;
+            }
+            $("#comments").find("li").remove();
+            var html = "";
+            for(var i=paramData.startIndex;i<paramData.startIndex+paramData.pageSize;i++){
+                if(i<dataList.length) {
+                    html = "<li>\n" +
+                        "<img class=\"img-social-content img-circle pull-left\" style=\"height: 25px;width: 25px;margin-right: 10px;\" src=\"" + dataList[i].createAvat + "\">\n" +
+                        "<span><a href=\"#\" class=\"insta-color\">" + dataList[i].creator + "</a> " + dataList[i].content + "" +
+                        "<br>\n" +
+                        "<b>" + dataList[i].createDat + "</b>\n" +
+                        "</span>\n" +
+                        "<hr>\n" +
+                        "</li>\n";
+                    $("#comments").append(html);
+                }
+            }
+            if(paramData.startIndex+paramData.pageSize<=dataList.length) {
+                paramData.startIndex += paramData.pageSize;
+            }
+        }else{//下一页
+
+            if(paramData.startIndex<dataList.length){
+                console.log($("#comments").children("li").length)
+                if($("#comments").children("li").length<paramData.pageSize){
+                    layer.msg("没有更多了", {icon: 2, time: 1000});
+                    return;
+                }
+                $("#comments").find("li").remove();
+                var html = "";
+                for(var i=paramData.startIndex;i<paramData.startIndex+paramData.pageSize;i++){
+
+                    if(i<dataList.length) {
+                        html = "<li>\n" +
+                            "<img class=\"img-social-content img-circle pull-left\" style=\"height: 25px;width: 25px;margin-right: 10px;\" src=\"" + dataList[i].createAvat + "\">\n" +
+                            "<span><a href=\"#\" class=\"insta-color\">" + dataList[i].creator + "</a> " + dataList[i].content + "" +
+                            "<br>\n" +
+                            "<b>" + dataList[i].createDat + "</b>\n" +
+                            "</span>\n" +
+                            "<hr>\n" +
+                            "</li>\n";
+                        $("#comments").append(html);
+                    }
+                }
+                if(paramData.startIndex+paramData.pageSize<=dataList.length) {
+                    paramData.startIndex += paramData.pageSize;
+                }
+            }else{
+                if(noFlash){
+                    layer.msg("没有更多了", {icon: 2, time: 1000});
+                    return;
+                }
+                $.ajax({
+                    cache : true,
+                    type : "GET",
+                    url : dataUrl,
+                    data : paramData,
+                    async : false,
+                    error : function(request) {
+                        console.info(request);
+                        layer.msg("系统错误", {icon: 2, time: 1000});
+                    },
+                    success : function(data) {
+                        if(data.code==200){
+                            if(data.data.length>0) {
+                                dataList = dataList.concat(data.data);
+                                $("#comments").find("li").remove();
+                                var html = "";
+                                for(var i=paramData.startIndex;i<dataList.length;i++){
+                                    html = "<li>\n"+
+                                        "<img class=\"img-social-content img-circle pull-left\" style=\"height: 25px;width: 25px;margin-right: 10px;\" src=\""+dataList[i].createAvat+"\">\n"+
+                                        "<span><a href=\"#\" class=\"insta-color\">"+dataList[i].creator+"</a> "+dataList[i].content+""+
+                                        "<br>\n"+
+                                        "<b>"+dataList[i].createDat+"</b>\n"+
+                                        "</span>\n"+
+                                        "<hr>\n" +
+                                        "</li>\n";
+
+                                    $("#comments").append(html);
+                                }
+
+                            }
+
+                            if(data.data.length<paramData.pageSize){
+                                noFlash = true;
+                            }else{
+                                paramData.startIndex += paramData.pageSize;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+</script>
+<script>
+</script>
+</body>
+</html>

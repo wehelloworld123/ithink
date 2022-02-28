@@ -1,0 +1,714 @@
+<!doctype html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>我思</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/static/admin/assets/images/icon.png}">
+    <link rel="apple-touch-icon" th:href="@{/static/admin/assets/images/icon.png}">
+    <link rel="stylesheet" th:href="@{/static/admin/css/bootstrap.css}">
+
+    <!-- Place favicon.ico in the root directory -->
+    <!-- all css here -->
+    <!-- bootstrap v3.3.6 css -->
+    <!--<link rel="stylesheet" th:href="@{/static/admin/css/bootstrap.min.css}">-->
+    <!-- flat-icon css -->
+    <link rel="stylesheet" th:href="@{/static/admin/css/flaticon.css}">
+    <link rel="icon" th:href="@{/static/admin/assets/images/icon.png}" type="image/x-icon">
+    <!-- animate css -->
+    <link rel="stylesheet" th:href="@{/static/admin/css/animate.css}">
+    <!-- jquery-ui.min css -->
+    <!--<link rel="stylesheet" th:href="@{/static/admin/css/jquery-ui.min.css}">-->
+    <!-- meanmenu css -->
+    <!--<link rel="stylesheet" th:href="@{/static/admin/css/meanmenu.min.css}">-->
+    <!-- owl.carousel css -->
+    <link rel="stylesheet" th:href="@{/static/admin/css/owl.carousel.css}">
+    <!-- font-awesome css -->
+    <link rel="stylesheet" th:href="@{/static/admin/css/font-awesome.min.css}">
+    <!-- style css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/style.css}" type="text/css" />
+    <!-- responsive css -->
+    <!--<link rel="stylesheet" th:href="@{/static/admin/css/responsive.css}">-->
+    <!-- modernizr css -->
+   <!-- <script th:src="@{/static/admin/js/vendor/modernizr-2.8.3.min.js}"></script>-->
+    <!--JQuery-->
+
+
+   <!-- <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">-->
+
+    <script th:src="@{/static/admin/js/jquery.min.js}"></script>
+    <script th:src="@{/static/admin/js/bootstrap.js}"></script>
+    <script type="text/javascript">
+
+        $(function() {
+            $(".nav2").hide();
+            $(window).scroll(function() {
+
+                if($(document).scrollTop() >= 150) {
+
+                    $(".nav2").addClass("navbar navbar-default navbar-fixed-top").slideDown();
+
+                } else {
+
+                    $(".nav2").hide();
+
+                }
+
+            })
+
+        })
+    </script>
+
+    <style>
+        .register_login{
+
+            width: 80px;
+            position: relative;
+            right: 100px;
+        }
+        .hide{
+            display: none;
+        }
+        a{
+            text-decoration:none;
+        }
+        i{
+            text-decoration:none;
+        }
+        .headmsg{
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+
+        }
+        .loginbutton{
+            height: 40px;
+            width: 70px;
+            background-color: rgba(0,0,0,0);
+            color: #4ea9ff;
+            border:2px solid #ffffff;
+            font-weight: bold;
+        }
+        .xiaoacao_footer{
+            line-height: 35px;
+
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-family: Arial;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .register_login a{
+            position: relative;
+            left: 40px;
+            top: -25px;
+            margin-right: 5px;
+            color: white;
+        }
+        .gonganbeian{
+            width: 170px;
+            height:40px;
+            float: left;
+            position: absolute;
+            cursor: pointer;
+        }
+        .wangluoanquan_icon{
+            width: 100%;
+            position: absolute;
+            bottom: 0px;
+            height: 41px;
+        }
+
+        .row{
+            flex-direction: row;
+            -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+        }
+
+        .center{
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -webkit-flex;
+
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content: center;
+            -webkit-justify-content: center;
+        }
+        .devWidth{width: 375px;}
+    </style>
+</head>
+<body data-spy="scroll" data-target="#navbar-example" style="position:relative;">
+<!-- Header Area Start Here -->
+<header>
+    <div class="header-area" style="background: rgba(0,0,0,1)">
+        <div class="container">
+            <div class="row">
+
+                <div id="navigate" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hide">
+
+
+                    <div class="nav2" id="navbar-example">
+                        <nav>
+                            <div class="main-menu" style="display: flex;flex-direction: row;justify-content: space-around;text-align: center;background: rgba(255,255,255,1)">
+                                <img style="height: 150px;width: 150px" th:src="@{/static/admin/assets/images/logo.png}"/>
+                                <ul class="nav navbar-nav" style="display: inline-block;float: none;background: rgba(255,255,255,1)">
+                                    <li class="active" style="color: #ffffff"><a  style="color: #2b2b2b" href="#Index">首页</a></li>
+                                    <li><a href="#Platform_advantages" style="color: #2b2b2b">世界元素</a></li>
+                                    <li><a href="#Copyright" style="color: #2b2b2b">版权运营</a></li>
+                                    <li><a href="#Joinus" style="color: #2b2b2b">加入我们<i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li><a href="#Mobile_production" style="color: #2b2b2b">移动产品</a></li>
+                                    <li><a href="#Feature_vision" style="color: #2b2b2b">未来愿景</a></li>
+                                    <li><a href="#Contact_cooperation" style="color: #2b2b2b">联系合作</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</header>
+<!-- Header Area End Here -->
+<!-- Slider Area Start Here -->
+<div>
+    <div style="position: absolute;right: 140px;top: 40px;z-index: 99999;display: flex;justify-content: center;align-items: center;" class="btn loginbutton" onclick="login()">登陆</div>
+    <div style="position: absolute;right: 40px;top: 40px;z-index: 99999;display: flex;justify-content: center;align-items: center;" class="btn loginbutton" onclick="enroll()">注册</div>
+    <!-- <div style="display: flex;flex-direction: column;-webkit-flex-direction: column;-ms-flex-direction:column;justify-content: center;align-items: center;overflow: hidden;border-radius: 5px;position: absolute;right: 200px;top: 200px;z-index: 100;height: 300px;width: 300px;background-color: #ffffff">
+         <div style="padding-bottom: 10px;"><p>扫描下载纯粹世界手机APP</p></div>
+         <div class="images">
+             <img th:src="@{/static/admin/assets/images/QRcode.png}" alt="">
+         </div>
+     </div>-->
+    <div class="slider-area" id="Index">
+
+        <div class="single-slider slide-one">
+            <div style="position: absolute;left: 0;right: 0;top:0;bottom: 0;background-color: rgba(0,0,0,0.1);"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <h2>纯粹世界</h2>
+                        <div id="qrcode" style="display: none;z-index: 99999;flex-direction: column;-webkit-flex-direction: column;-ms-flex-direction:column;justify-content: center;align-items: center;overflow: hidden;border-radius: 5px;position: absolute;right: 100px;top: 10px;z-index: 20;height: 320px;width: 300px;background-color: #ffffff">
+                            <div style="font-weight: bold"><p>扫描下载我思APP</p></div>
+
+                            <img style="height: 85%;width: 85%" th:src="@{/static/admin/assets/images/guanwang/QRcode.png}" alt="">
+
+                        </div>
+                        <p class="wow zoomIn" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;color: #ffffff;font-size: 2.5em">微创作  多版权</p>
+                        <br><br><br><br><br>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="single-slider slide-two">
+             <div class="container">
+                 <div class="row">
+                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                         <h2 style="visibility: hidden">纯粹世界</h2>
+                         <div id="qrcode1" style="display: none;z-index: 99999;flex-direction: column;-webkit-flex-direction: column;-ms-flex-direction:column;justify-content: center;align-items: center;overflow: hidden;border-radius: 5px;position: absolute;right: 100px;top: 10px;z-index: 20;height: 320px;width: 300px;background-color: #ffffff">
+                             <div style="font-weight: bold"><p>扫描下载我思APP</p></div>
+
+                             <img style="height: 90%;width: 90%" th:src="@{/static/admin/assets/images/guanwang/QRcode.png}" alt="">
+
+                         </div>
+                         <p class="wow zoomIn" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;color: #ffffff;font-size: 3.5em">艺术来源于生活</p>
+                         <br><br><br><br><br>
+                         &lt;!&ndash; <div class="read-more"><a href="#">Discover More</a></div>&ndash;&gt;
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="single-slider slide-three">
+             <div class="container">
+                 <div class="row">
+                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                         <h2 style="visibility: hidden">纯粹世界</h2>
+                         <div id="qrcode2" style="display: none;z-index: 99999;flex-direction: column;-webkit-flex-direction: column;-ms-flex-direction:column;justify-content: center;align-items: center;overflow: hidden;border-radius: 5px;position: absolute;right: 100px;top: 10px;z-index: 20;height: 320px;width: 300px;background-color: #ffffff">
+                             <div style="font-weight: bold"><p>扫描下载我思APP</p></div>
+
+                             <img style="height: 90%;width: 90%" th:src="@{/static/admin/assets/images/guanwang/QRcode.png}" alt="">
+
+                         </div>
+                         <p class="wow zoomIn" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;color: #ffffff;font-size: 3.5em">心中的诗和远方</p>
+                         <br><br><br><br><br>
+                         &lt;!&ndash;<div class="read-more"><a href="#">Discover More</a></div>&ndash;&gt;
+                     </div>
+                 </div>
+             </div>
+         </div>-->
+    </div>
+</div>
+<!-- Slider Area End Here -->
+<!-- Reason to come the zoo start here -->
+<div class="reason-to-come-zoo-area"  id="Platform_advantages">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="section-title">
+                    <h2>世界元素</h2>
+                    <p>特征优势</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="single-reason">
+                    <div class="icon">
+                        <a style="text-decoration:none;"><i class="flaticon-shapes"></i></a>
+                    </div>
+                    <h3><a style="text-decoration:none;">国内首个精神世界网站</a></h3>
+                    <p>我们致力于打造一个网络精神世界，让所有人能够在其中诉说自己的故事</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="single-reason">
+                    <div class="icon">
+                        <a style="text-decoration:none;"><i class="flaticon-social-3"></i></a>
+                    </div>
+                    <h3><a style="text-decoration:none;">丰富的题材及类型创作</a></h3>
+                    <p>在这里您可以通过诗歌、散文、小说、短视频等众多形式来进行创作</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="single-reason">
+                    <div class="icon">
+                        <a style="text-decoration:none;"><i class="flaticon-square-1"></i></a>
+                    </div>
+                    <h3><a style="text-decoration:none;">搭建深层次的社交关系网</a></h3>
+                    <p>在这里您可以与所有志同道合的朋友一起交流、学习、创作</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="single-reason">
+                    <div class="icon">
+                        <a style="text-decoration:none;"><i class="flaticon-monuments"></i></a>
+                    </div>
+                    <h3><a style="text-decoration:none;">让创作走进每个人的日常生活中</a></h3>
+                    <p>无需才艺，只要一支笔，我们就可以为您实现您的创作梦</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="single-reason">
+                    <div class="icon">
+                        <a style="text-decoration:none;"><i class="flaticon-book"></i></a>
+                    </div>
+                    <h3><a style="text-decoration:none;">分享生活&热爱生活</a></h3>
+                    <p>如果您在旅途中走累了或者迷路了，都可以来这里小憩一下再出发</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="single-reason">
+                    <div class="icon">
+                        <a style="text-decoration:none;"><i class="flaticon-sports-1"></i></a>
+                    </div>
+                    <h3><a style="text-decoration:none;">庞大的潜在用户群体</a></h3>
+                    <p>我们希望能帮助到所有的泛抑郁型用户，重新燃起他们心中那团火</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Reason to come the zoo end here -->
+<!-- Showcase Area Start Here -->
+<div class="showcase-area" id="Copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="section-title">
+                    <h2 >版权运营</h2>
+                    <p>经典案例</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="showcase-slider">
+                <div class="single-showcase">
+                    <div class="images">
+                        <img th:src="@{/static/admin/assets/images/guanwang/pexels-taryn-elliott-4405254.jpg}" alt="">
+                    </div>
+                    <div class="overley">
+                        <div class="information">
+                            <h3><a href="#">女巫与城堡</a></h3>
+                            <a href="#"><!--by Alexandre Cabanel--></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-showcase">
+                    <div class="images">
+                        <img th:src="@{/static/admin/assets/images/guanwang/pexels-mathias-pr-reding-5331853.jpg}" alt="">
+                    </div>
+                    <div class="overley">
+                        <div class="information">
+                            <h3><a href="#">静谧之夜<!--Black & White Horses Toghether Nice Indian Face Looking--></a></h3>
+                            <a href="#"><!--by Alexandre Cabanel--></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-showcase">
+                    <div class="images">
+                        <img th:src="@{/static/admin/assets/images/guanwang/pexels-jeffrey-czum-2439595.jpg}" alt="">
+                    </div>
+                    <div class="overley">
+                        <div class="information">
+                            <h3><a href="#">窥探森林<!--Black & White Horses Toghether Nice Indian Face Looking--></a></h3>
+                            <a href="#"><!--by Alexandre Cabanel--></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-showcase">
+                    <div class="images">
+                        <img th:src="@{/static/admin/assets/images/guanwang/pexels-miles-hardacre-2404368.jpg}" alt="">
+                    </div>
+                    <div class="overley">
+                        <div class="information">
+                            <h3><a href="#">月圆之夜<!--Black & White Horses Toghether Nice Indian Face Looking--></a></h3>
+                            <a href="#"><!--by Alexandre Cabanel--></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Showcase Area End Here -->
+<!-- Promo Area Start Here -->
+<!--<div class="promo-area" id="Joinus">-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">-->
+<!--                <div class="promo-text">-->
+<!--                    <h2> 开启新世界 </h2>-->
+<!--                    <p>去寻找、发现属于您的精神乐园，和我们一起创造世界</p>-->
+<!--                    <div class="read-more">-->
+<!--                        <a href="joinus.html">欢迎加入</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<div class="recent-zooks-photo-area" id="Mobile_production">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="section-title" style="align-items: center">
+                    <h2 >移动产品</h2>
+                    <p>关于APP</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="center row" style="justify-content: space-between">
+            <div></div>
+            <h2 class="small-title">我思 | iThink</h2>
+            <div onclick="download()"> 下载</div>
+        </div>
+        <div class="contactpartner" style="display: flex;flex-direction: row;-webkit-flex-direction: row;-ms-flex-direction:row;flex-wrap: wrap;-webkit-flex-wrap: wrap;-ms-flex-wrap: wrap;">
+
+            <div  style="flex: 1;margin-top: 60px;">
+                <div class="exhibition-details">
+
+                   <!-- <p style="line-height: 30px;margin-top: 30px">iThink是一个集文学、绘画、诗歌以及思想创作为一体的艺术创作平台,提供话题讨论、社区发帖、作品集成、内容创作等服务。致力于打造一个纯粹的精神世界，让更多的用户能够通过艺术创作，产生思想上的碰撞，享受到精神层面的愉快。</p>
+                    <br>
+                    <p>(1)丰富的创作命题。您可以选择不同类型，不同题目进行创作，充分满足您的创作环境</p>
+                    <br>
+                    <p>(2)“微创作，多版权”，集用户创作之长，一起完成一部部优秀的作品。您的一次创作，可以拥有多个作品的版权权益</p>
+                    <br>
+                    <p>(3)构建“思想树”。创造自己的世界，向世界展示自己精彩的精神世界</p>-->
+
+                    <video id="video" th:src="@{/static/source/ithink.webm}" controls autoplay class="devWidth" style="height: auto"></video>
+
+                </div>
+            </div>
+         <!--   <div class="container" style="flex: 1;display: flex;justify-content: center;align-items: center;">
+                <img th:src="@{/static/admin/assets/images/guanwang/appb.png}"/>
+            </div>-->
+
+            <div  style="flex: 1;margin-top: 60px;margin-left: 20px;">
+                <div class="exhibition-details">
+
+                    <p style="line-height: 30px;margin-top: 30px">iThink是一个集文学、绘画、诗歌以及思想创作为一体的艺术创作平台,提供话题讨论、社区发帖、作品集成、内容创作等服务。致力于打造一个纯粹的精神世界，让更多的用户能够通过艺术创作，产生思想上的碰撞，享受到精神层面的愉快。</p>
+                    <br>
+                    <p>(1)丰富的创作命题。您可以选择不同类型，不同题目进行创作，充分满足您的创作环境</p>
+                    <br>
+                    <p>(2)“微创作，多版权”，集用户创作之长，一起完成一部部优秀的作品。您的一次创作，可以拥有多个作品的版权权益</p>
+                    <br>
+                    <p>(3)构建“思想树”。创造自己的世界，向世界展示自己精彩的精神世界</p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Video Section End Here -->
+<!-- Recent Zooks Photos Start Here -->
+<div class="recent-zooks-photo-area" id="Feature_vision">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="section-title">
+                    <h2 >未来愿景</h2>
+                    <p>战略布局</p>
+                </div>
+            </div>
+        </div>
+        <div class="promo-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="promo-text">
+                            <h2>开启新世界</h2>
+                            <p>去寻找、发现属于您的精神乐园，和我们一起创造世界</p>
+                            <div class="read-more">
+                                <a href="#">欢迎加入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Current Exchibition Area End Here
+Video Section Start Here -->
+<div class="recent-zooks-photo-area" id="Contact_cooperation">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="section-title">
+                    <h2>合作联系</h2>
+                    <p>共建共享</p>
+                </div>
+            </div>
+        </div>
+        <div class="contactpartner">
+
+            <!-- Breadcumb End Here -->
+            <!-- Contact Us Area Start Here -->
+            <div class="contact-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                            <div class="contact-text">
+                                <ul>
+                                    <li>
+                                        <div class="single-contact">
+                                            <h3>地址</h3>
+                                            <p>湖北省武汉市青山区冶金大道180号</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="single-contact">
+                                            <h3>营业时间</h3>
+                                            <p>周一至周日: 9:00am - 7:00pm</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="single-contact">
+                                            <h3>联系电话</h3>
+                                            <p>Ph1: (012) 345 - 6789 <br>Ph2: (012) 498 - 6727</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="single-contact">
+                                            <h3>电子邮箱</h3>
+                                            <p>徐先生:wjy_sys@vvvpure.com</p>
+                                            <!-- <div class="social-share">
+                                               <ul>
+                                                 <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                                 <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                                 <li><a href="#"><i class="fa fa-flickr" aria-hidden="true"></i></a></li>
+                                               </ul>
+                                             </div>-->
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                            <div class="form-area">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="section-title">
+                                                <h2>联系</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="leave-comments-area">
+                                            <form>
+                                                <fieldset>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>姓名:</label>
+                                                            <input type="text" class="form-control" placeholder="姓名">
+                                                        </div>
+                                                    </div>
+                                                    <!--                              <div class="col-sm-6">-->
+                                                    <!--                                <div class="form-group">-->
+                                                    <!--                                <label>Last Name:</label>-->
+                                                    <!--                                  <input type="text" class="form-control" placeholder="Your Last Name">-->
+                                                    <!--                                </div>-->
+                                                    <!--                              </div>-->
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>消息:</label>
+                                                            <textarea cols="40" rows="4" class="textarea form-control" placeholder="内容..."></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-8">
+                                                        <div class="form-group">
+                                                            <label>电子邮件:</label>
+                                                            <input type="email" class="form-control" placeholder="您的邮箱地址">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-8">
+                                                        <div class="form-group">
+                                                            <label>联系电话:</label>
+                                                            <input type="email" class="form-control" placeholder="联系电话">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-8">
+                                                        <div class="form-group">
+                                                            <button class="btn-send" type="submit">发送</button>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Recent Zooks Photos End Here -->
+<!-- Footer Start Here -->
+<footer >
+
+    <div class="news-letter">
+        <div class="container">
+            <div class="row">
+                <div class="xiaoacao_footer">
+                    <p>Copyright©2020-2025  vvvpure.com  武汉闻嘉瑜信息技术有限公司</p>
+                    <p  onclick="javascript:window.open('https://beian.miit.gov.cn/')">鄂ICP备2020019510号-1</p>
+
+                </div>
+
+                <!-- <div class="wangluoanquan_icon">
+                     <p class="gonganbeian" onclick="javascript:window.open('http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=30160069124278271')">&nbsp;</p>
+                     <div class="shanghaigongshang" onclick="javascript:window.open('http://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&amp;entyId=2013122015143555')">&nbsp;</div>
+                 </div>-->
+
+            </div>
+        </div>
+    </div>
+
+</footer>
+<!-- Footer End Here -->
+<!-- all js here -->
+<!-- jquery latest version -->
+<!--<script th:src="@{/static/admin/js/vendor/jquery-1.12.0.min.js}"></script>-->
+<!-- bootstrap js -->
+<!--<script th:src="@{/static/admin/js/bootstrap.min.js}"></script>-->
+<!-- owl.carousel js -->
+<script th:src="@{/static/admin/js/owl.carousel.min.js}"></script>
+<!-- meanmenu js -->
+<script th:src="@{/static/admin/js/jquery.meanmenu.js}"></script>
+<!-- jquery-ui js -->
+<!--<script th:src="@{/static/admin/js/jquery-ui.min.js}"></script>-->
+<!-- wow js -->
+<script th:src="@{/static/admin/js/wow.min.js}"></script>
+<!-- plugins js -->
+<!--<script th:src="@{/static/admin/js/plugins.js}"></script>-->
+<!-- main js -->
+<script th:src="@{/static/admin/js/guanwang/main.js}"></script>
+<!--<link rel="stylesheet" th:href="@{static/admin/assets/style.css}" type="text/css" />-->
+<!--<link rel="stylesheet" th:href="@{static/admin/assets/css/mystyle.css}" type="text/css"/>-->
+<script type="text/javascript">
+
+    /**
+     * prod
+     * @type {string}
+     */
+    let loginUrl="/think/admin/login";
+    let enrollUrl="/think/admin/enroll";
+    let appUrl="/think/app/download";
+
+    /**
+     * dev
+     * @type {string}
+     */
+    // let loginUrl="/admin/login";
+    // let enrollUrl="/admin/enroll";
+    // let appUrl="/app/download";
+    function login() {
+        window.location.href=loginUrl;
+    }
+    function enroll() {
+        window.location.href=enrollUrl;
+    }
+    function download() {
+        window.location.href=appUrl;
+    }
+    //判断是否是手机
+    $(function() {
+        var isMobile = {
+            Android: function () {
+                return navigator.userAgent.match(/Android/i) ? true : false;
+            },
+            BlackBerry: function () {
+                return navigator.userAgent.match(/BlackBerry/i) ? true : false;
+            },
+            iOS: function () {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+            },
+            Windows: function () {
+                return navigator.userAgent.match(/IEMobile/i) ? true : false;
+            },
+            any: function () {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
+            }
+        };
+
+
+        var dev = isMobile.any(); //是移动设备
+        if(!dev){
+            $('#qrcode').css('display',"flex");
+            $('#qrcode1').css('display',"flex");
+            $('#qrcode2').css('display',"flex");
+            $('#video').removeClass("devWidth");
+            $('#video').css("width:600px");
+            $('#navigate').removeClass("hide");
+        }else{
+
+        }
+    })
+
+</script>
+</body>
+</html>

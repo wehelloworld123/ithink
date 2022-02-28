@@ -1,0 +1,633 @@
+﻿<!doctype html>
+<html  xmlns:th="http://www.thymeleaf.org">
+	<head>
+
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>我思 App</title>
+		<!-- Website meta description and keywords -->
+		<meta name="description" content="Add your app description here">
+		<meta name="keywords" content="Add your app keywords here">
+		<!-- Website Favicon -->
+		<link rel="icon" th:href="@{/static/admin/assets/images/icon.png}" type="image/x-icon">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" type="text/css" th:href="@{/static/admin/css/bootstrap.min.css}" media="all" />
+		<!-- Owl carousel CSS -->
+		<link rel="stylesheet" type="text/css" th:href="@{/static/admin/css/owl.carousel.css}">
+		<!-- Slick nav CSS -->
+		<link rel="stylesheet" type="text/css" th:href="@{/static/admin/css/slicknav.min.css}" media="all" />
+		<!-- Iconfont CSS -->
+		<link rel="stylesheet" type="text/css" th:href="@{/static/admin/css/icofont.css}" media="all" />
+		<!-- Lightbox CSS -->
+		<link rel="stylesheet" type="text/css" th:href="@{/static/admin/css/lightbox.min.css}"/>
+		<!-- Animate CSS -->
+		<link rel="stylesheet" type="text/css" th:href="@{/static/admin/css/animate.min.css}">
+		<!-- Main CSS -->
+		<link rel="stylesheet" type="text/css" th:href="@{/static/admin/css/style.css}" media="all" />
+		<!-- Style CSS -->
+		<link rel="stylesheet" type="text/css" th:href="@{/static/admin/css/style-1.css}" media="all" />
+		<!-- Responsive CSS -->
+		<link rel="stylesheet" type="text/css" th:href="@{/static/admin/css/responsive-1.css}" media="all" />
+
+		<style>
+			.button-a{
+				height: 2rem;
+				width: 5rem;
+				text-align: center;
+				font-size: 0.8rem;
+				line-height: 2rem;
+				border-radius: 0.2rem;
+				background-color: #039be5;
+				padding:0 0.5rem 0 0.5rem;
+
+
+			}
+			.flex{
+				display: flex;
+			}
+			.flex-8{
+				flex: 8;
+				-ms-flex: 8;
+				-webkit-flex: 8;
+			}
+			.flex-4{
+				flex: 4;
+				-ms-flex: 4;
+				-webkit-flex: 4;
+			}
+			.hideM{
+				display: none !important;
+			}
+		</style>
+	</head>
+	<body data-spy="scroll" data-target=".header" data-offset="50">
+<!--		<th:block th:if="${third eq '1'}">-->
+<!--			<a id="links" th:href="*{href}"></a>-->
+<!--		</th:block>-->
+
+
+	    <div id="preloader"></div>
+		<!-- header section start -->
+<!--		<header class="header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2 col-6">
+						<div class="logo">
+							<a href="#home"><img th:src="@{/static/app/assets/img/logo.png}" alt="logo" /></a>
+						</div>
+					</div>
+					<div class="col-md-10 col-6">
+						<div class="responsive-menu"></div>
+					    <div class="mainmenu">
+                            <ul id="primary-menu">
+                                <li><a class="nav-link active" href="#home">Home</a></li>
+                                <li><a class="nav-link" href="#about">About</a></li>
+                                <li><a class="nav-link" href="#feature">Feature</a></li>
+                                <li><a class="nav-link" href="#overview">Overview</a></li>
+                                <li><a class="nav-link" href="#statistics">Statistics</a></li>
+                                <li><a class="nav-link" href="#screenshot">Screenshot</a></li>
+                                <li><a class="nav-link" href="#feedback">Feedback</a></li>
+                                <li><a class="nav-link" href="#download">Download</a></li>
+                            </ul>
+					    </div>
+					</div>
+				</div>
+			</div>
+		</header>-->
+		<!-- header section end -->
+		<!-- banner section start -->
+		<section class="banner-area" id="home">
+			<div class="container">
+				<div class="row flexbox-center">
+					<div class="col-lg-7">
+						<div class="single-banner">
+							<h1>我思 | iThink</h1>
+							<p>iThink是一个集文学、绘画、诗歌以及思想创作为一体的艺术创作平台,提供话题讨论、社区发帖、作品集成、内容创作等服务。致力于打造一个纯粹的精神世界，让更多的用户能够通过艺术创作，产生思想上的碰撞，享受到精神层面的愉快。</p>
+
+							<span id="ISO"     class="appbox-btn" data-toggle="popover"  data-placement="top" data-html="true" data-content="<img src='/think/static/admin/assets/images/guanwang/iosapp.png'>"><i class="icofont icofont-brand-apple"></i> IOS</span>
+							<span id="Android"   data-toggle="popover"  data-placement="top" class="appbox-btn appbox-btn2" data-html="true" data-content="<img src='/think/static/admin/assets/images/guanwang/andriodapp.png'>"><i class="icofont icofont-brand-android-robot"></i> Android</span>
+
+						</div>
+					</div>
+					<div class="col-lg-5">
+					    <div class="single-banner text-lg-left text-center">
+							<img th:src="@{/static/admin/images/app/banner.png}" alt="banner" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<th:block th:if="${third eq '1'}">
+		<div style="display: flex;height: 4rem;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1;background-color:#F0F8FF" class="flex-row align-items-center justify-content-around">
+			<div><span>下载我思app更多精彩等着你</span></div>
+			<div class="button-a" id="links">
+
+				<a th:href="*{href}"><span style="color: #FFFFFF">打开APP</span></a>
+
+
+			</div>
+		</div>
+		</th:block>
+		<th:block th:if="${appType eq '1'}">
+		<div id="model" class="flex-column hideM" style="z-index: 2;display: flex;position: fixed;left: 0;right: 0;top: 0;bottom: 0;background-color: rgba(0,0,0,0.5)">
+			<div class="flex flex-row flex-4 justify-content-end align-items-center" style="padding: 1rem;">
+				<div class="flex justify-content-center align-items-center" style="border-width: 0.09rem;border-color: #FFFFFF;border-radius: 50%;border-style: solid;width: 2.5rem;height: 2.5rem">
+				<img style="width: auto;height: 1rem" th:src="@{/static/admin/images/app/more.png}" alt="banner" />
+				</div>
+			</div>
+			<div class="flex flex-row flex-4 justify-content-end align-items-center">
+				<img style="width: auto;height: 10rem" th:src="@{/static/admin/images/app/arrow.png}" alt="banner" />
+			</div>
+			<div class="flex flex-row flex-8 justify-content-center align-items-center">
+				<div class="flex flex-column justify-content-center align-items-center" style="line-height: 2rem;height: 8rem;width: 16rem;border-radius: 50%;border-style: dashed;border-color: #FFFFFF;border-width: 0.1rem">
+					<p class="text-white font-weight-bold">请通过第三方浏览器打开再操作</p>
+					<p class="text-white font-weight-bold">谢谢理解!</p>
+				</div>
+			</div>
+			<div class="flex flex-row flex-4 justify-content-center align-items-start">
+				<img id="imgBut" style="width: auto;height: 3rem" th:src="@{/static/admin/images/app/kown.png}" alt="banner" />
+			</div>
+		</div>
+		</th:block>
+<!-- banner section end -->
+		<!-- about section start -->
+<!--		<section class="about-area ptb-100" id="about">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+					    <div class="sec-title">
+							<h2>About Application</h2>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+					    <div class="single-about-box">
+							<i class="icofont icofont-file-document"></i>
+							<h4>Responsive Design</h4>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+						</div>
+					</div>
+					<div class="col-lg-4">
+					    <div class="single-about-box">
+							<i class="icofont icofont-rocket"></i>
+							<h4>Fast Performance</h4>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+						</div>
+					</div>
+					<div class="col-lg-4">
+					    <div class="single-about-box">
+							<i class="icofont icofont-tools-alt-2"></i>
+							<h4>Cross Platfrom</h4>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>-->
+
+		<!-- about section end -->
+		<!-- feature section start -->
+	<!--	<section class="feature-area" id="feature">
+			<div class="container">
+				<div class="row flexbox-center">
+					<div class="col-lg-6">
+						<div class="single-feature-box text-lg-left text-center">
+							<img th:src="@{/static/app/assets/img/appbox-img-1/feature.png}" alt="feature" />
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="single-feature-box">
+							<h2>Introduce with amazing & Smart features</h2>
+							<ul>
+								<li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
+								<li>Tempor incididunt ut labore et dolore magna aliqua.</li>
+								<li>Minim veniam quis nostrud exercitation.</li>
+								<li>Commodo consequat.</li>
+								<li>Duis aute irure dolor in reprehenderit in voluptate.</li>
+								<li>Velitesse cillum dolore eu fugiat nulla pariatur.</li>
+								<li>Excepteur sint occaecat cupidatat non proident sunt.</li>
+								<li>Culpa qui officia deserunt mollit anim id est laborum.</li>
+							</ul>
+							<a href="#" class="appbox-btn">Download</a>
+							<a href="#" class="appbox-btn appbox-btn2">Learn more</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>&lt;!&ndash; feature section end &ndash;&gt;
+		&lt;!&ndash; overview section start &ndash;&gt;
+		<section class="overview-area ptb-80">
+			<div class="container">
+				<div class="row flexbox-center">
+					<div class="col-lg-6">
+						<div class="single-overview-box">
+							<h2>Amazing Features</h2>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
+							<p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+							<a href="#" class="appbox-btn appbox-btn3">Learn more</a>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="single-overview-box text-lg-right text-center">
+							<img th:src="@{/static/app/assets/img/appbox-img-1/overview.png}" alt="feature" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>-->
+		<!-- overview section end -->
+		<!-- feature section start -->
+		<!--<section class="feature-area" id="overview">
+			<div class="container">
+				<div class="row flexbox-center">
+					<div class="col-lg-6">
+						<div class="single-feature-box">
+							<img th:src="@{/static/app/assets/img/appbox-img-1/feature.png}" alt="feature" />
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="single-feature-box">
+							<h2>Instant Support</h2>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
+							<p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+							<a href="#" class="appbox-btn appbox-btn2">Learn more</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>&lt;!&ndash; feature section end &ndash;&gt;
+		&lt;!&ndash; activity section start &ndash;&gt;
+		<section class="activity-area ptb-100" id="statistics">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+					    <div class="sec-title mb-50">
+							<h2>Statistics</h2>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+					    <div class="activity-box">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="single-activity-box">
+										<div class="activity-box-chart" data-percent="100"><span>90K</span></div>
+										<h4>Total Download</h4>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="single-activity-box">
+										<div class="activity-box-chart" data-percent="75"><span>75K</span></div>
+										<h4>Happy Users</h4>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="single-activity-box">
+										<div class="activity-box-chart" data-percent="60"><span>60K</span></div>
+										<h4>Regular Users</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>-->
+		<!-- activity section end -->
+		<!-- screenshots section start -->
+<!--		<section class="screenshots-area ptb-80" id="screenshot">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+					    <div class="sec-title mb-50">
+							<h2>App Screenshort</h2>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="screenshot-area-slider">
+							<div class="screenshot-single-slide">
+								<img th:src="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot1.png}" alt="screenshot" />
+								<div class="screenshot-overlay">
+									<a class="icofont icofont-ui-search example-image-link" th:href="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot1.png}" data-lightbox="example-set" data-title=""></a>
+								</div>
+							</div>
+							<div class="screenshot-single-slide">
+								<img th:src="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot2.png}" alt="screenshot" />
+								<div class="screenshot-overlay">
+									<a class="icofont icofont-ui-search example-image-link" th:href="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot2.png}" data-lightbox="example-set" data-title=""></a>
+								</div>
+							</div>
+							<div class="screenshot-single-slide">
+								<img th:src="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot3.png}" alt="screenshot" />
+								<div class="screenshot-overlay">
+									<a class="icofont icofont-ui-search example-image-link" th:href="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot3.png}" data-lightbox="example-set" data-title=""></a>
+								</div>
+							</div>
+							<div class="screenshot-single-slide">
+								<img th:src="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot4.png}" alt="screenshot" />
+								<div class="screenshot-overlay">
+									<a class="icofont icofont-ui-search example-image-link" th:href="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot4.png}" data-lightbox="example-set" data-title=""></a>
+								</div>
+							</div>
+							<div class="screenshot-single-slide">
+								<img th:src="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot1.png}" alt="screenshot" />
+								<div class="screenshot-overlay">
+									<a class="icofont icofont-ui-search example-image-link" th:href="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot1.png}" data-lightbox="example-set" data-title=""></a>
+								</div>
+							</div>
+							<div class="screenshot-single-slide">
+								<img th:src="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot2.png}" alt="screenshot" />
+								<div class="screenshot-overlay">
+									<a class="icofont icofont-ui-search example-image-link" th:href="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot2.png}" data-lightbox="example-set" data-title=""></a>
+								</div>
+							</div>
+							<div class="screenshot-single-slide">
+								<img th:src="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot3.png}" alt="screenshot" />
+								<div class="screenshot-overlay">
+									<a class="icofont icofont-ui-search example-image-link" th:href="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot3.png}" data-lightbox="example-set" data-title=""></a>
+								</div>
+							</div>
+							<div class="screenshot-single-slide">
+								<img th:src="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot4.png}" alt="screenshot" />
+								<div class="screenshot-overlay">
+									<a class="icofont icofont-ui-search example-image-link" th:href="@{/static/app/assets/img/appbox-img-1/screenshot/screenshot4.png}" data-lightbox="example-set" data-title=""></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>-->
+
+		<!-- screenshots section end -->
+		<!-- feedback section start -->
+		<!--<section class="ptb-100" id="feedback">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+					    <div class="sec-title mb-30">
+							<h2>Client Feedback</h2>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+					    <div class="author-feedback">
+							<div class="author-single-slide">
+								<div class="author-img">
+									<img th:src="@{/static/app/assets/img/appbox-img-1/author.png}" alt="author" />
+								</div>
+								<h4>Albert Janny</h4>
+								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the indus-try's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+								<div class="author-rating">
+									<i class="icofont icofont-star"></i>
+									<i class="icofont icofont-star"></i>
+									<i class="icofont icofont-star"></i>
+									<i class="icofont icofont-star"></i>
+									<i class="icofont icofont-star"></i>
+								</div>
+							</div>
+							<div class="author-single-slide">
+								<div class="author-img">
+									<img th:src="@{/static/app/assets/img/appbox-img-1/author.png}" alt="author" />
+								</div>
+								<h4>Albert Janny</h4>
+								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the indus-try's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+								<div class="author-rating">
+									<i class="icofont icofont-star"></i>
+									<i class="icofont icofont-star"></i>
+									<i class="icofont icofont-star"></i>
+									<i class="icofont icofont-star"></i>
+									<i class="icofont icofont-star"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>&lt;!&ndash; feedback section end &ndash;&gt;
+		&lt;!&ndash; download section start &ndash;&gt;
+		<section class="download-area ptb-100" id="download">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="single-download-box">
+							<h1>Get Application Now! <span>It is free and you will love it.</span></h1>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+							<a href="#" class="appbox-btn"><i class="icofont icofont-brand-apple"></i> App Store</a>
+							<a href="#" class="appbox-btn appbox-btn2"><i class="icofont icofont-brand-android-robot"></i> Play Store</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>-->
+		<!-- download section end -->
+		<!-- subscribe section start -->
+<!--		<section class="subscribe-area">
+			<div class="container">
+				<div class="row flexbox-center">
+					<div class="col-xl-4 col-lg-5">
+						<div class="single-subscribe-box">
+							<h4><span>Subscribe</span> Us to Get Latest Update</h4>
+						</div>
+					</div>
+					<div class="col-xl-8 col-lg-7">
+						<div class="single-subscribe-box">
+							<form action="#">
+								<input type="email" placeholder="example@email.com"/>
+								<button class="appbox-btn appbox-btn3" type="submit">Subscribe</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>-->
+		<!-- subscribe section end -->
+		<!-- footer section start -->
+	<!--	<footer class="footer">
+			<div class="container">
+				<div class="row">
+                    <div class="col-lg-6">
+                        <div class="footer-content">
+							<p>Copyright <a href="http://www.bootstrapmb.com/">Envalab</a> - All Right Reserved</p>
+						</div>
+                    </div>
+
+				</div>
+			</div>
+		</footer>-->
+		<!-- footer section end -->
+	<!--	<a href="#" class="scrolltotop">
+			<i class="icofont icofont-arrow-up" aria-hidden="true"></i>
+		</a>-->
+		<!-- jquery main JS -->
+		<script th:src="@{/static/admin/js/jquery.min.js}"></script>
+		<!-- Bootstrap JS -->
+		<script th:src="@{/static/admin/js/bootstrap.min.js}"></script>
+		<!-- Slick nav JS -->
+		<script th:src="@{/static/admin/js/guanwang/jquery.slicknav.min.js}"></script>
+		<!-- owl carousel JS -->
+		<script th:src="@{/static/admin/js/owl.carousel.min.js}"></script>
+		<!-- EasyPieChart JS -->
+		<script th:src="@{/static/admin/js/guanwang/jquery.easypiechart.min.js}"></script>
+		<!-- Lightbox JS -->
+		<script th:src="@{/static/admin/js/guanwang/lightbox.min.js}"></script>
+		<!-- WOW JS -->
+		<script th:src="@{/static/admin/js/guanwang/wow-1.3.0.min.js}"></script>
+		<!-- Common JS -->
+		<script th:src="@{/static/admin/js/common.js}"></script>
+		<!-- main JS -->
+		<script th:src="@{/static/admin/js/guanwang/main-1.js}"></script>
+		<!-- Footer End Here -->
+		<!-- all js here -->
+		<!-- jquery latest version -->
+<!--		<script th:src="@{/static/admin/assets/js/vendor/jquery-1.12.0.min.js}"></script>-->
+		<!-- bootstrap js -->
+
+		<!-- meanmenu js -->
+		<script th:src="@{/static/admin/js/jquery.meanmenu.js}"></script>
+		<!-- jquery-ui js -->
+		<script th:src="@{/static/admin/js/jquery-ui.min.js}"></script>
+		<!-- wow js -->
+		<script th:src="@{/static/admin/js/wow.min.js}"></script>
+		<!-- plugins js -->
+		<script th:src="@{/static/admin/js/plugins.js}"></script>
+		<!-- main js -->
+		<script th:src="@{/static/admin/js/guanwang/main.js}"></script>
+
+
+
+
+
+
+
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<script type="text/javascript">
+
+			var third = [[${third}]];
+			var appType = [[${appType}]];
+			//判断是否是手机
+			var dev;
+			$(function() {
+
+				$("#links").click(function() {
+					if(appType!=null && appType == "1") {
+						$("#model").removeClass("hideM");
+						appType = null;
+					}
+
+				});
+
+
+				$("#imgBut").click(function() {
+					$("#model").addClass("hideM");
+				});
+
+
+
+				var isMobile = {
+					Android: function () {
+						return navigator.userAgent.match(/Android/i) ? true : false;
+					},
+					BlackBerry: function () {
+						return navigator.userAgent.match(/BlackBerry/i) ? true : false;
+					},
+					iOS: function () {
+						return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+					},
+					Windows: function () {
+						return navigator.userAgent.match(/IEMobile/i) ? true : false;
+					},
+					any: function () {
+						return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
+					}
+				};
+
+
+				dev = isMobile.any(); //是移动设备
+				if(dev){
+					$('#ISO').attr("href","https://itunes.apple.com/cn/app/id1560058017?mt=8&at=1l3vntR&ct=qm");
+					$('#Android').attr("href","https://wjy.vvvpure.com/think/static/andriod.apk");
+				}else{
+
+				}
+
+			})
+
+
+
+
+			$("#ISO").mouseover(function() {
+				if (!dev){//非移动设备
+					$("#ISO").popover("show");
+					/*$("#ISO").popover({
+                        html: true,
+/!*						trigger: 'focus',*!/
+                        content:'<img src="/static/admin/assets/images/guanwang/iosvapp.png">'
+                    });
+*/
+				}
+			});
+
+
+
+
+			$("#ISO").mouseout(function() {
+				if (!dev){//非移动设备
+					$("#ISO").popover("hide")
+				}
+			});
+
+			$("#ISO").click(function() {
+				if (dev){//移动设备
+					//window.location.href="https://www.vvvpure.com/static/ios.ipa";
+					window.location.href="https://itunes.apple.com/cn/app/id1560058017?mt=8&at=1l3vntR&ct=qm";
+				}
+			});
+
+			$("#Android").click(function() {
+				if (dev){
+					//window.location.href="https://www.vvvpure.com/static/andriod.apk";
+					window.location.href="https://wjy.vvvpure.com/think/static/source/ithinkapp.apk";
+				}
+
+			});
+
+			$("#Android").mouseover(function() {
+				if (!dev){
+					$("#Android").popover("show");
+					/*$("#Android").popover({
+
+                        html: true,
+                        trigger: 'focus',
+                        content:'<img src="/static/admin/assets/images/guanwang/andriodapp.png">'
+                    })*/
+				}
+
+			});
+
+			$("#Android").mouseout(function() {
+				if (!dev){
+					$("#Android").popover("hide")
+				}
+
+			});
+
+
+
+		</script>
+	</body>
+</html>

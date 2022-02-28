@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('作品证明表修改')"/>
+</head>
+<body>
+<form class="layui-form" action=""  th:object="${ProCertificate}">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+				<div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="*{certid}" name="certid" lay-verify="title"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">appid</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{appid}" type="text" name="appid" autocomplete="off" placeholder="appid" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">作品编号</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{proNo}" type="text" name="proNo" autocomplete="off" placeholder="作品编号" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">用户设备</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{clientInfo}" type="text" name="clientInfo" autocomplete="off" placeholder="用户设备" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">ip地址</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{ipaddress}" type="text" name="ipaddress" autocomplete="off" placeholder="ip地址" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">用户签名</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{signature}" type="text" name="signature" autocomplete="off" placeholder="用户签名" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{signStatus}" type="text" name="signStatus" autocomplete="off" placeholder="状态" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">声明路径</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{filepath}" type="text" name="filepath" autocomplete="off" placeholder="声明路径" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">声明时间</label>
+                    <div class="layui-input-block">
+                        <input th:value="${ProCertificate.dateToStringConvert(ProCertificate.signTim)}" type="text" name="signTim" autocomplete="off" placeholder="声明时间" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建人Id</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{createBy}" type="text" name="createBy" autocomplete="off" placeholder="创建人Id" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建日期</label>
+                    <div class="layui-input-block">
+                        <input th:value="${ProCertificate.dateToStringConvert(ProCertificate.createDat)}" type="text" name="createDat" autocomplete="off" placeholder="创建日期" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-block">
+                        <input th:value="${ProCertificate.dateToStringConvert(ProCertificate.createTim)}" type="text" name="createTim" autocomplete="off" placeholder="创建时间" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">最后更新时间</label>
+                    <div class="layui-input-block">
+                        <input th:value="${ProCertificate.dateToStringConvert(ProCertificate.lUpdateDat)}" type="text" name="lUpdateDat" autocomplete="off" placeholder="最后更新时间" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">是否删除</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{isDel}" type="text" name="isDel" autocomplete="off" placeholder="是否删除" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit=""
+                    lay-filter="proCertificate-update">
+                <i class="layui-icon layui-icon-ok"></i>
+				提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+				重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['form','laydate','jquery'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let MODULE_PATH = rootPath+"/ProCertificateController";
+		
+		var laydate = layui.laydate;
+        //同时绑定多个
+        lay('.datetime-input').each(function(){
+          laydate.render({
+            elem: this
+            ,trigger: 'click'
+            ,type: 'datetime'
+          });
+        });
+        form.on('submit(proCertificate-update)', function (data) {
+            $.ajax({
+                url: MODULE_PATH+'/edit',
+                data: data.field,
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded',
+                type: 'post',
+                success: function (result) {
+                    if (result.code==200) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("proCertificate-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

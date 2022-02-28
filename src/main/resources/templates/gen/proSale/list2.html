@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('作品上架表列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="searchText" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="proSale-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="proSale-table" lay-filter="proSale-table"></table>
+    </div>
+</div>
+</body>
+<!--
+<script type="text/html" id="proSale-toolbar">
+    <button shiro:hasPermission="gen:proSale:add" class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+		 新增
+    </button>
+    <button shiro:hasPermission="gen:proSale:remove" class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+        <i class="layui-icon layui-icon-delete"></i>
+		删除
+    </button>
+</script>-->
+
+<script type="text/html" id="proSale-bar">
+    {{#if (d.saleStatus == '0') { }}
+    <button shiro:hasPermission="gen:proSale:edit" class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit" title="上架"><i class="layui-icon layui-icon-release"></i>
+    </button>
+    {{# }else if(d.saleStatus == '1'){ }}
+    <button shiro:hasPermission="gen:proSale:remove" class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove" title="下架"><i class="layui-icon layui-icon-subtraction"></i>
+    </button>
+    {{# } }}
+
+</script>
+
+
+<script type="text/html" id="proSale-type">
+    {{#if (d.dataState == '0') { }}
+    <span class="layui-badge layui-bg-orange">开启</span>
+    {{# }else if(d.dataState == '-1'){ }}
+    <span class="layui-badge layui-bg-blue">关闭</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="status-type">
+
+    {{#if (d.saleStatus == '2') { }}
+    <span class="layui-badge layui-bg-orange">已出售</span>
+    {{# }else if(d.saleStatus == '1'){ }}
+    <span class="layui-badge layui-bg-blue">已上架</span>
+    {{# }else if(d.saleStatus == '0'){ }}
+    <span class="layui-badge layui-bg-red">未上架</span>
+    {{# } }}
+</script>
+<script type="text/html" id="typ-type">
+
+    {{#if (d.typ == 1) { }}
+    <span>文学</span>
+    {{# }else if(d.typ == 2){ }}
+    <span>绘画</span>
+    {{# }else if(d.typ == 3){ }}
+    <span>诗词</span>
+    {{# } }}
+</script>
+<script type="text/html" id="createTyp-type">
+
+    {{#if (d.createTyp == '00') { }}
+    <span>自由创作</span>
+    {{# }else if(d.createTyp == '1'){ }}
+    <span>历史</span>
+    {{# }else if(d.createTyp == '2'){ }}
+    <span>文学</span>
+    {{# }else if(d.createTyp == '3'){ }}
+    <span>思想</span>
+    {{# }else if(d.createTyp == '4'){ }}
+    <span>游戏</span>
+    {{# }else if(d.createTyp == '5'){ }}
+    <span>言情</span>
+    {{# }else if(d.createTyp == '6'){ }}
+    <span>心理</span>
+    {{# }else if(d.createTyp == '01'){ }}
+    <span>摄影</span>
+    {{# }else if(d.createTyp == '02'){ }}
+    <span>水墨</span>
+    {{# }else if(d.createTyp == '03'){ }}
+    <span>油画</span>
+    {{# }else if(d.createTyp == '04'){ }}
+    <span>水粉</span>
+    {{# }else if(d.createTyp == '05'){ }}
+    <span>山水</span>
+    {{# }else if(d.createTyp == '06'){ }}
+    <span>素描</span>
+    {{# }else if(d.createTyp == '001'){ }}
+    <span>诗</span>
+    {{# }else if(d.createTyp == '002'){ }}
+    <span>词</span>
+    {{# } }}
+</script>
+
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        let MODULE_PATH = rootPath+"/ProSaleController/";
+        let cols = [
+            [
+                /* {type: 'checkbox'},*/
+
+                {title: '主键', field: 'id', align: 'center'},
+
+                {title: '作品编号', field: 'proNo', align: 'center'},
+
+                {title: '集', field: 'seter', align: 'center'},
+
+                {title: '标题', field: 'title', align: 'center'},
+
+                /*{title: '封面', field: 'cover', align: 'center'},*/
+
+                /*{title: '展示', field: 'exhibition', align: 'center'},*/
+
+
+                {title: '作品类型', field: 'typ', align: 'center',toolbar: '#typ-type'},
+
+                {title: '创作类型', field: 'createTyp', align: 'center',toolbar: '#createTyp-type'},
+
+                {title: '标签', field: 'label', align: 'center'},
+
+                {title: '描述', field: 'description', align: 'center'},
+
+                {title: '售价(￥)', field: 'saleAmt', align: 'center'},
+
+                {title: '状态', field: 'saleStatus', align: 'center',toolbar: '#status-type'},
+
+                /* {title: '创建人Id', field: 'createBy', align: 'center'},*/
+
+                {title: '上架时间', field: 'createDat', align: 'center'},
+
+                /*		{title: '最后更新时间', field: 'lUpdateDat', align: 'center'},
+
+                        {title: '是否删除', field: 'isDel', align: 'center'},*/
+
+                {title: '截止时间', field: 'deadline', align: 'center'},
+
+
+                {title: '操作', toolbar: '#proSale-bar', align: 'center'}
+            ]
+        ]
+
+        //table表单列表
+        table.render({
+            elem: '#proSale-table',
+            url: MODULE_PATH + 'list2',
+            page: true,
+            method: 'get',
+            cols: cols,
+            skin: 'line',
+            toolbar: '#proSale-toolbar',
+            defaultToolbar: [{
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+        //table图标事件绑定
+        table.on('tool(proSale-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        //table工具栏绑定
+        table.on('toolbar(proSale-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        //查询按钮绑定
+        form.on('submit(proSale-query)', function (data) {
+            table.reload('proSale-table', {where: data.field})
+            return false;
+        });
+
+
+        //添加
+        window.add = function () {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shade: 0.1,
+                area: ['500px', '500px'],
+                content: MODULE_PATH + 'add'
+            });
+        }
+        //修改
+        window.edit = function (obj) {
+            layer.confirm('确定要上架该作品', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "edit?ids=" + obj.data['id'],
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg("已上架该作品", {icon: 1, time: 1000}, function () {
+                                table.reload('proSale-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+        //删除
+        window.remove = function (obj) {
+            layer.confirm('确定要下架该作品', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + obj.data['id'],
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg("已下架该作品", {icon: 1, time: 1000}, function () {
+                                table.reload('proSale-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        //批量删除
+        window.batchRemove = function (obj) {
+            let data = table.checkStatus(obj.config.id).data;
+            if (data.length === 0) {
+                layer.msg("未选中数据", {icon: 3, time: 1000});
+                return false;
+            }
+            let ids = "";
+            for (let i = 0; i < data.length; i++) {
+                ids += data[i].id + ",";
+            }
+            ids = ids.substr(0, ids.length - 1);
+            layer.confirm('确定要删除这些数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                table.reload('proSale-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+        //刷新按钮
+        window.refresh = function () {
+            table.reload('proSale-table');
+        }
+    })
+</script>
+</html>

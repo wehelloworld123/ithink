@@ -1,0 +1,360 @@
+<!doctype html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>我思</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/static/admin/assets/images/icon.png}">
+    <link rel="apple-touch-icon" th:href="@{/static/admin/assets/images/icon.png}">
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/bootstrap.css}">
+
+    <!-- Place favicon.ico in the root directory -->
+    <!-- all css here -->
+    <!-- bootstrap v3.3.6 css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/bootstrap.min.css}">
+    <!-- flat-icon css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/flaticon.css}">
+    <link rel="icon" th:href="@{/static/admin/images/icon.png}" type="image/x-icon">
+    <!-- animate css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/animate.css}">
+    <!-- jquery-ui.min css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/jquery-ui.min.css}">
+    <!-- meanmenu css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/meanmenu.min.css}">
+    <!-- owl.carousel css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/owl.carousel.css}">
+    <!-- font-awesome css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/font-awesome.min.css}">
+    <!-- style css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/style.css}" type="text/css" />
+    <!-- responsive css -->
+    <link rel="stylesheet" th:href="@{/static/admin/assets/css/responsive.css}">
+    <!-- modernizr css -->
+    <script th:src="@{/static/admin/assets/js/vendor/modernizr-2.8.3.min.js}"></script>
+    <!--JQuery-->
+
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+        $(function() {
+            $(".nav2").hide();
+            $(window).scroll(function() {
+
+                if($(document).scrollTop() >= 150) {
+
+                    $(".nav2").addClass("navbar navbar-default navbar-fixed-top").slideDown();
+
+                } else {
+
+                    $(".nav2").hide();
+
+                }
+
+            })
+
+        })
+    </script>
+
+    <style>
+        .register_login{
+
+            width: 80px;
+            position: relative;
+            right: 100px;
+        }
+        a{
+            text-decoration:none;
+        }
+        i{
+            text-decoration:none;
+        }
+        .headmsg{
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+
+        }
+        .loginbutton{
+            height: 40px;
+            width: 70px;
+            background-color: rgba(0,0,0,0);
+            color: #4ea9ff;
+            border:2px solid #ffffff;
+            font-weight: bold;
+        }
+        .xiaoacao_footer{
+            line-height: 35px;
+
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-family: Arial;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .register_login a{
+            position: relative;
+            left: 40px;
+            top: -25px;
+            margin-right: 5px;
+            color: white;
+        }
+        .gonganbeian{
+            width: 170px;
+            height:40px;
+            float: left;
+            position: absolute;
+            cursor: pointer;
+        }
+        .wangluoanquan_icon{
+            width: 100%;
+            position: absolute;
+            bottom: 0px;
+            height: 41px;
+        }
+    </style>
+</head>
+<body data-spy="scroll" data-target="#navbar-example" style="position:relative;">
+<!-- Header Area Start Here -->
+<header>
+
+
+</header>
+
+<div class="xieyi" style="margin:50px">
+
+    <div class="xieyicont">
+        <h1>作者创作管理协议</h1>
+        <div class="cont">
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">亲爱的作者用户您好：</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">&emsp;&emsp;欢迎您加入到“我思”创作平台：</span><br />
+                <span style="font-family:'微软雅黑';font-weight:400;">&emsp;&emsp;请您仔细阅读以下条款,如果对本协议的条款有任何的异议,建议您不使用我思及其服务。当您选择同意并注册成功,在我思上浏览、发布作品、参与讨论等任何与内容相关的行为，均表示您(以下简称“作者”)完全同意并接受本协议项下的全部条款。</span>
+            </p>
+
+
+            <p style="font-size:16px;">
+                <span style="font-family:'微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';font-weight:700;">平台服务</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">我思作品管理平台（以下简称”我思“）是一个集文学、绘画、诗歌以及思想创作为一体的艺术作品架构平台,提供思想创作、章节撰写、作品集成、文件下载等服务。致力于通过用户通过创作的优秀的艺术品打造一个纯粹的精神世界，让更多的用户能够通过艺术创作，产生思想上的碰撞，享受到精神层面的愉快。</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">1、我思提供内容创作、作品集成等功能，严格遵守国家法律法律，对作者在我思上发布上线的任何创作作品，我思有权查验并做处理，同时对非法行为保留法律追究权利</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">2、我思为每一部完成作品提供作品初始版权权益声明，备份保留作品版权信息记录，为作者提供安全稳定的创作环境</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">3、如果任何第三方侵犯我思作者的相关权利，作者同意授权我思或其指定代理人代表我思对第三方提出警告、投诉、发起行政执法、诉讼、进行上诉，或谈判和解，并且作者同意在我思认为必要时参与共同维权</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">4、平台审核通过的作品可上线到我思APP，供我思APP用户选择和创作</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">5、我思愿意在能力范围内为作者提供良好的作品宣传环境，帮助作者在更短时间内完成作品的创作</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">6、我思愿意协助作者确定作品的版权权益的分配方式，保障每位作者及内容创作者的版权权益</span>
+            </p>
+
+
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">
+                <br>
+                </span>
+            </p>
+
+
+
+
+
+
+
+            <p style="font-size:16px;">
+                <span style="font-family:'微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';font-weight:700;">知识产权</span>
+            </p>
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">1、作者在我思上发表的全部原创作品，著作权均归作者本人所有。</span>
+            </p>
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">2、作者在我思上发表的全部原创作品，作者拥有至少30%初始版权权益，作者授权第三方使用作品时需要与版权不低于30%的其他作者或内容创作者协商同意。</span>
+            </p>
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">3、作者在我思上线且完成了50%的非专栏专题作品，我思享有10%的作品版权权益。作者可授权第三方以任何方式使用该作品，不需要我思同意</span>
+            </p>
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">4、作者在我思上线且完成了50%的专栏专题作品，我思享有至少30%的作品版权权益。作者授权第三方使用该作品，需要与”我思“协商并经”我思“同意</span>
+            </p>
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">5、作者在自由创作类型的作品命题（作品的章节或分篇）可以采用多个用户的创作内容</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">6、作者在非自由创作类型的作品命题下，至多采用一个用户的创作内容</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">7、作者采用的用户创作内容仅能在该命题的作品上享有内容的版权权益，搬运到其他作品均需要获得内容创作者的授权许可</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">8、作者采用的用户创作内容仅能在该命题的作品上享有内容的版权权益，搬运到其他作品均需要获得内容创作者的授权许可</span>
+            </p>
+
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">
+                <br>
+                </span>
+            </p>
+
+
+
+
+
+
+            <p style="font-size:16px;">
+                <span style="font-family:'微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';font-weight:700;">免责条款</span>
+            </p>
+
+
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">1、我思不承担作品完成之后的版权权益分配问题，例如作品内某一内容进行商业运营造成的利益纠纷。我思建议应在作品完成之前由双方协议确定</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">
+                </span>
+            </p>
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">2、我思仅作为艺术作品的发布集成管理平台，不对作者的创作作品所涉及的法律风险负责</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">
+                </span>
+            </p>
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">3、我思拥有作者创作作品的商用使用权，包括不限于作品出版、广告宣传，同时分享50%净收入所得</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">
+                </span>
+            </p>
+
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">4、我思保有所有作品命题的所有权，未经本平台同意不得私自删除命题</span>
+            </p>
+            <p style="font-size:14px;">
+                <span style="font-family:'微软雅黑';font-weight:400;">
+                </span>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Recent Zooks Photos End Here -->
+<!-- Footer Start Here -->
+<footer >
+
+    <div class="news-letter">
+        <div class="container">
+            <div class="row">
+                <div class="xiaoacao_footer">
+                    <p>Copyright©2020-2025  vvvpure.com  武汉闻嘉瑜信息技术有限公司</p>
+                    <p  onclick="javascript:window.open('https://hubca.miit.gov.cn/')">鄂ICP备2020019510号</p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</footer>
+<!-- Footer End Here -->
+<!-- all js here -->
+<!-- jquery latest version -->
+<script th:src="@{/static/admin/assets/js/vendor/jquery-1.12.0.min.js}"></script>
+<!-- bootstrap js -->
+<script th:src="@{/static/admin/assets/js/bootstrap.min.js}"></script>
+<!-- owl.carousel js -->
+<script th:src="@{/static/admin/assets/js/owl.carousel.min.js}"></script>
+<!-- meanmenu js -->
+<script th:src="@{/static/admin/assets/js/jquery.meanmenu.js}"></script>
+<!-- jquery-ui js -->
+<script th:src="@{/static/admin/assets/js/jquery-ui.min.js}"></script>
+<!-- wow js -->
+<script th:src="@{/static/admin/assets/js/wow.min.js}"></script>
+<!-- plugins js -->
+<script th:src="@{/static/admin/assets/js/plugins.js}"></script>
+<!-- main js -->
+<script th:src="@{/static/admin/assets/js/guanwang/main.js}"></script>
+<!--<link rel="stylesheet" th:href="@{static/admin/assets/style.css}" type="text/css" />-->
+<!--<link rel="stylesheet" th:href="@{static/admin/assets/css/mystyle.css}" type="text/css"/>-->
+<script type="text/javascript">
+
+    var loginUrl="http://localhost:8080/admin/login";
+    var enrollUrl="http://localhost:8080/admin/enroll";
+    var appUrl="http://localhost:8080/app/download";
+    /*   var  loginUrl="http://www.vvvpure.com/think/admin/login";
+       var enrollUrl="http://www.vvvpure.com/think/admin/enroll";
+       var appUrl="http://www.vvvpure.com/think/app/download";*/
+    function login() {
+        window.location.href=loginUrl;
+    }
+    function enroll() {
+        window.location.href=enrollUrl;
+    }
+    function download() {
+        window.location.href=appUrl;
+    }
+    //判断是否是手机
+    $(function() {
+        var isMobile = {
+            Android: function () {
+                return navigator.userAgent.match(/Android/i) ? true : false;
+            },
+            BlackBerry: function () {
+                return navigator.userAgent.match(/BlackBerry/i) ? true : false;
+            },
+            iOS: function () {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+            },
+            Windows: function () {
+                return navigator.userAgent.match(/IEMobile/i) ? true : false;
+            },
+            any: function () {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
+            }
+        };
+
+
+        var dev = isMobile.any(); //是移动设备
+        if(!dev){
+            $('#qrcode').css('display',"flex");
+            $('#qrcode1').css('display',"flex");
+            $('#qrcode2').css('display',"flex");
+        }
+    })
+
+</script>
+</body>
+</html>

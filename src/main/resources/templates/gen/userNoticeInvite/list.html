@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:include="include :: header('用户邀请通知列表')"/>
+
+    <style type="text/css">
+        .layui-table-cell {
+            height: 100px;
+            line-height: 100px;
+        }
+    </style>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+           <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="searchText" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="userNoticeInvite-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                   	 查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+					重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="userNoticeInvite-table" lay-filter="userNoticeInvite-table"></table>
+    </div>
+</div>
+</body>
+
+<script type="text/html" id="avatar-type">
+
+    <img src="{{d.avatar}}" style="height: 40px;width: 40px" alt="">
+</script>
+
+<script type="text/html" id="userNoticeInvite-bar">
+    <button shiro:hasPermission="gen:userNoticeInvite:add" class="pear-btn pear-btn pear-btn-sm layui-bg-blue" lay-event="add" title="邀请"><i class="layui-icon layui-icon-user"></i>
+    </button>
+
+</script>
+
+
+<script type="text/html" id="userNoticeInvite-type">
+    {{#if (d.dataState == '0') { }}
+    <span class="layui-badge layui-bg-orange">开启</span>
+    {{# }else if(d.dataState == '-1'){ }}
+    <span class="layui-badge layui-bg-blue">关闭</span>
+    {{# } }}
+</script>
+
+<th:block th:include="include :: footer"/>
+<script>
+    var proNo = "[[${id}]]";
+    var proType = "[[${proType}]]";
+    layui.use(['table', 'form', 'jquery'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        let MODULE_PATH = rootPath+"/UserNoticeInviteController/";
+        let cols = [
+            [
+                
+                {title: 'Tnk 号', field: 'id', align: 'center'},
+
+                {title: '头像', field: 'avatar',toolbar: '#avatar-type', align: 'center'},
+
+                {title: '昵称', field: 'nickname', align: 'center'},
+
+				                
+                {title: '操作', toolbar: '#userNoticeInvite-bar', align: 'center'}
+            ]
+        ]
+
+        //table表单列表
+        table.render({
+            elem: '#userNoticeInvite-table',
+            url: MODULE_PATH + 'list',
+            page: true,
+            method: 'get',
+            cols: cols,
+            skin: 'line'
+           // toolbar: '#userNoticeInvite-toolbar',
+            /*    defaultToolbar: [{
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh',
+                }, 'filter', 'print', 'exports']*/
+        });
+
+        //table图标事件绑定
+        table.on('tool(userNoticeInvite-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        //table工具栏绑定
+        table.on('toolbar(userNoticeInvite-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        //查询按钮绑定
+        form.on('submit(userNoticeInvite-query)', function (data) {
+            table.reload('userNoticeInvite-table', {where: data.field})
+            return false;
+        });
+
+
+        //添加
+        window.add = function (obj) {
+            obj.data["proNo"] = proNo;
+            obj.data["proType"] = proType;
+            obj.data["inviteeId"] = obj.data["id"];
+            obj.data["inviteeNm"] = obj.data["nickname"];;
+            let loading = layer.load();
+            $.ajax({
+                url: MODULE_PATH + "add",
+                dataType: 'json',
+                data:obj.data,
+                type: 'post',
+                success: function (result) {
+                    layer.close(loading);
+                    if (result.code==200) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+        }
+        //修改
+        window.edit = function (obj) {
+            layer.open({
+                type: 2,
+                title: '修改',
+                shade: 0.1,
+                area: ['500px', '500px'],
+                content: MODULE_PATH + 'edit/' + obj.data['id']
+            });
+        }
+        //删除
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + obj.data['id'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        //批量删除
+        window.batchRemove = function (obj) {
+            let data = table.checkStatus(obj.config.id).data;
+            if (data.length === 0) {
+                layer.msg("未选中数据", {icon: 3, time: 1000});
+                return false;
+            }
+            let ids = "";
+            for (let i = 0; i < data.length; i++) {
+                ids += data[i].id + ",";
+            }
+            ids = ids.substr(0, ids.length - 1);
+            layer.confirm('确定要删除这些数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                table.reload('userNoticeInvite-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+        //刷新按钮
+        window.refresh = function () {
+            table.reload('userNoticeInvite-table');
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.pollix.at/thymeleaf/shiro">
+<head>
+
+    <title th:text=${title}></title>
+    <!-- 这儿引用单独的css link -->
+    <link rel="stylesheet" th:href="@{/static/admin/css/ladda/ladda.min.css}">
+    <!-- <script type="text/javascript" th:src="@{/static/admin/bootstarp/ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js}"></script>-->
+    <!--样式 -->
+    <link rel="stylesheet" th:href="@{/static/admin/css/style.css}">
+    <link rel="stylesheet" th:href="@{/static/admin/css/loader-style.css}">
+    <link rel="stylesheet" th:href="@{/static/admin/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/static/admin/css/profile.css}">
+
+    <style type="text/css">
+        /**
+        *这里写单独的css样式
+        */
+        .form-group{
+            margin: 20px 0 20px 0;
+        }
+        .form-control {
+            transition: none;
+        }
+
+
+        .form-control::-ms-expand {
+            background-color: transparent;
+            border: 0;
+        }
+
+        .form-control:-moz-focusring {
+            color: transparent;
+            text-shadow: 0 0 0 #495057;
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .form-control::-webkit-input-placeholder {
+            color: #6c757d;
+            opacity: 1;
+        }
+
+        .form-control::-moz-placeholder {
+            color: #6c757d;
+            opacity: 1;
+        }
+
+        .form-control:-ms-input-placeholder {
+            color: #6c757d;
+            opacity: 1;
+        }
+
+        .form-control::-ms-input-placeholder {
+            color: #6c757d;
+            opacity: 1;
+        }
+
+        .form-control::placeholder {
+            color: #6c757d;
+            opacity: 1;
+        }
+
+        .form-control:disabled, .form-control[readonly] {
+            background-color: #e9ecef;
+            opacity: 1;
+        }
+    </style>
+
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="assets/ico/minus.png">
+    <!--<link th:href="@{/static/admin/bootstarp/css/bootstrap.css/bootstrap.min.css}" rel="stylesheet"/>-->
+    <link th:href="@{/static/admin/bootstarp/css/fileinput.min.css}" rel="stylesheet"/>
+</head>
+
+<body id="listbody">
+<!-- 右边内容 -->
+<!--<div class="wrap-fluid">
+    <div class="container-fluid paper-wrap bevel tlbr">
+        &lt;!&ndash; 内容 &ndash;&gt;
+        &lt;!&ndash;标题 通用&ndash;&gt;
+        <div th:replace="admin/common/html/title :: title(${title},${parenttitle},${isMsg},${msgHTML})">
+        </div>
+
+    </div>
+</div>-->
+<!--  PAPER WRAP -->
+<div class="wrap-fluid">
+    <div class="container-fluid paper-wrap bevel tlbr">
+
+
+
+        <!-- END OF BREADCRUMB -->
+
+        <div class="content-wrap">
+            <!-- PROFILE -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="well profile col-sm-12" >
+                        <div class="col-sm-12">
+                            <div class="col-xs-12 col-sm-4 text-center">
+
+                                <ul class="list-group">
+                                    <li class="list-group-item text-left">
+                                        <span class="entypo-user"></span>&nbsp;&nbsp;概述</li>
+                                    <li class="list-group-item text-center">
+                                        <img  alt="" class="img-circle img-responsive img-profile"  th:src="${(userEntity.avatar != null && !#strings.isEmpty(userEntity.avatar)) ?userEntity.avatar : '/static/admin/portraits/men/10.jpg'}">
+                                    </li>
+                                    <li class="list-group-item text-center">
+                                            <span class="pull-left">
+                                                <strong>评级</strong>
+                                            </span>
+
+
+                                        <div class="ratings">
+
+                                            <a href="#">
+                                                <span class="fa fa-star"></span>
+                                            </a>
+                                            <a href="#">
+                                                <span class="fa fa-star-o"></span>
+                                            </a>
+                                            <a href="#">
+                                                <span class="fa fa-star-o"></span>
+                                            </a>
+                                            <a href="#">
+                                                <span class="fa fa-star-o"></span>
+                                            </a>
+                                            <a href="#">
+                                                <span class="fa fa-star-o"></span>
+                                            </a>
+
+                                        </div>
+
+
+                                    </li>
+
+                                    <li class="list-group-item text-right">
+                                            <span class="pull-left">
+                                                <strong>注册时间</strong>
+                                            </span><p th:text="*{createDat}"></p></li>
+                                    <!--<li class="list-group-item text-right">
+                                            <span class="pull-left">
+                                                <strong>最后登陆</strong>
+                                            </span></li>-->
+                                    <!--   <li class="list-group-item text-right">
+                                               <span class="pull-left">
+                                                   <strong>昵称</strong>
+                                               </span>themesmile</li>-->
+
+                                </ul>
+
+                            </div>
+                            <div class="col-xs-12 col-sm-8 profile-name" th:object="${userEntity}">
+                                <h2 th:text="*{nickname}">
+                                    <span class="pull-right social-profile">
+                                            <i class="entypo-facebook-circled"></i>  <i class="entypo-twitter-circled"></i>  <i class="entypo-linkedin-circled"></i>  <i class="entypo-github-circled"></i>  <i class="entypo-gplus-circled"></i>
+                                        </span>
+                                </h2>
+                                <hr>
+
+                                <dl class="dl-horizontal-profile">
+                                    <dt>用户ID</dt>
+                                    <dd th:text="*{id}"></dd>
+
+                                    <dt>昵称</dt>
+                                    <dd th:text="*{nickname}"></dd>
+
+                                    <dt>电子邮箱</dt>
+                                    <dd th:text="*{email}"></dd>
+
+                                    <!--<dt>电话</dt>
+                                    <dd th:text="*{username}"></dd>-->
+
+                                    <!-- <dt>注册时间</dt>
+                                     <dd th:text="*{createDat}"></dd>-->
+
+                                    <!--<dt>最后更新</dt>
+                                    <dd th:text="*{lUpdateDat}"></dd>-->
+
+                                    <dt>描述</dt>
+                                    <dd th:text="*{description}"></dd>
+
+                                    <!--<dt>技能</dt>-->
+                                    <!--<dd>
+                                        <th:block th:if="${userEntity.label} != null" th:each="text : ${#strings.arraySplit(userEntity.label, ';')}">
+                                        <span class="tags" th:text="${text}"></span>
+                                        </th:block>
+
+                                    </dd>-->
+                                    <dt>角色</dt>
+                                    <dd>艺术作品架构师</dd>
+                                </dl>
+
+
+                                <hr>
+
+                                <h5>
+                                    <span class="entypo-arrows-ccw"></span>&nbsp;&nbsp;Recent Activities</h5>
+
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 divider text-center">
+                            <div class="col-xs-12 col-sm-4 emphasis">
+                                <h2>
+                                    <strong th:text="${literature}"></strong>
+                                </h2>
+                                <p>
+                                    <small>文学</small>
+                                </p>
+                                <button onclick="backType(0)" class="btn btn-success btn-block">
+                                    <span class="fa fa-plus-circle"></span>&nbsp;&nbsp;创作</button>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-4 emphasis">
+                                <h2>
+                                    <strong th:text="${painting}"></strong>
+                                </h2>
+                                <p>
+                                    <small>诗歌</small>
+                                </p>
+                                <button onclick="backType(1)" class="btn btn-info btn-block">
+                                    <span class="fa fa-user"></span>&nbsp;&nbsp;创作</button>
+                            </div>
+                            <div class="col-sm-4 emphasis">
+                                <h2>
+                                    <strong th:text="${poetry}"></strong>
+                                </h2>
+                                <p>
+                                    <small>绘画</small>
+                                </p>
+                                <button onclick="backType(2)" class="btn btn-default btn-block" style="background-color: #ffa500;color: #FFFFFF;">
+                                    <span class="fa fa-user" style="color: #FFFFFF"></span>&nbsp;&nbsp;创作</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row">
+
+
+                    <div class="col-sm-12">
+                        <!-- BLANK PAGE-->
+
+                        <div style="margin:-20px 15px;" class="nest" id="Blank_PageClose">
+                            <div class="title-alt">
+                                <h6>
+                                    编辑用户资料</h6>
+                                <div class="titleClose">
+                                    <a class="gone" href="#Blank_PageClose">
+                                        <span class="entypo-cancel"></span>
+                                    </a>
+                                </div>
+                                <div class="titleToggle">
+                                    <a class="nav-toggle-alt" href="#Blank_Page_Content">
+                                        <span class="entypo-up-open"></span>
+                                    </a>
+                                </div>
+
+                            </div>
+
+                            <div class="body-nest" id="Blank_Page_Content">
+
+
+
+
+                                <div class="row">
+
+                                    <form  id="form-add">
+                                        <!-- left column -->
+
+
+                                        <!-- edit form column -->
+                                        <div class="col-md-9 personal-info" style="display: flex;flex-direction: column;-webkit-flex-direction: column;-ms-flex-direction: column">
+                                            <div class="alert alert-info alert-dismissable">
+                                                <a class="panel-close close" data-dismiss="alert">×</a>
+                                                <i class="fa fa-coffee"></i>
+                                                <strong>.提醒</strong>. 请用户完善相关信息，防止账户出现异常而无法登陆.
+                                            </div>
+                                            <!-- <h3>个人信息</h3>-->
+
+                                            <form class="form-horizontal" role="form">
+                                                <div class="form-group">
+                                                    <input id="avatar" name="avatar" type="hidden"/>
+                                                </div>
+                                                <!-- <div class="form-group">
+                                                     <label class="col-sm-3 control-label">账号:</label>
+                                                     <div class="col-sm-8">
+                                                         <input id="username" readonly="true" name="username" class="form-control"  type="text"  th:value="${userEntity.username}">
+                                                     </div>
+                                                 </div>-->
+
+                                                <div class="form-group">
+                                                    <label class="col-lg-1 control-label">昵称:</label>
+                                                    <div class="col-lg-8">
+                                                        <input id="nickname" name="nickname" class="form-control"  type="text"  th:value="${userEntity.nickname}">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-lg-1 control-label">Email:</label>
+                                                    <div class="col-lg-8">
+                                                        <input id="email" name="email" class="form-control"  type="text" th:value="${userEntity.email}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-1 control-label">性别:</label>
+                                                    <div class="col-lg-8">
+                                                        <div class="ui-select">
+                                                            <select id="sex" name="sex" class="form-control" th:value="${userEntity.sex}">
+                                                                <option th:selected="${userEntity.sex eq 0}" value="0">男</option>
+                                                                <option th:selected="${userEntity.sex eq 1}" value="1">女</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-1 control-label">描述:</label>
+                                                    <div class="col-lg-8">
+                                                        <input id="description" name="description" class="form-control"  type="text" th:value="${userEntity.description}">
+                                                    </div>
+                                                </div>
+                                                <input id="think" name="think" class="form-control"  type="hidden" th:value="${userEntity.think}">
+                                                <!--<div class="form-group">
+                                                    <label class="col-md-3 control-label">密码:</label>
+                                                    <div class="col-md-8">
+                                                        <input id="password" name="password" class="form-control" value="" type="password">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">确认密码:</label>
+                                                    <div class="col-md-8">
+                                                        <input  id="password2" name="password2" class="form-control" value="" type="password">
+                                                    </div>
+                                                </div>-->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"></label>
+                                                    <div class="col-md-8">
+                                                        <button lay-submit lay-filter="edit" class="btn btn-primary">保存</button>
+                                                        <!--  <span></span>
+                                                          <input class="btn btn-default" value="取消" type="reset">-->
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END OF BLANK PAGE -->
+
+                </div>
+            </div>
+            <!-- END OF PROFILE -->
+
+
+            <!-- /END OF CONTENT -->
+
+
+        </div>
+    </div>
+    <!--  END OF PAPER WRAP -->
+
+
+</div>
+<!-- END OF RIGHT SLIDER CONTENT-->
+
+<th:block th:include="include :: footer"/>
+<script type="text/javascript">
+    var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
+    let layer = layui.layer;
+    layui.use(['form','jquery','layer'], function() {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let layer = layui.layer;
+        let MODULE_PATH = rootPath+"/profile";
+        form.on('submit(edit)', function(data){
+            var nickname = $("#nickname").val();
+            if(nickname==""||nickname==null){
+                layer.msg("昵称未输入",{icon:2,time:1000},function(){});
+                return false;
+            }
+            var email = $("#email").val();
+            if(email==""||email==null){
+                layer.msg("邮箱未输入",{icon:2,time:1000},function(){});
+                return false;
+            }
+            if(!reg.test(email)){
+                layer.msg("邮箱格式有误",{icon:2,time:1000},function(){});
+                return false;
+            }
+            var dataFormJson = $("#form-add").serialize();
+            $.ajax({
+                cache : true,
+                type : "POST",
+                url : MODULE_PATH+'/edit',
+                data : dataFormJson,
+                async : false,
+                error : function(request) {
+                    layer.msg("保存失败",{icon:2,time:1000},function(){});
+                },
+                success : function(data) {
+                    layer.msg("保存成功",{icon:1,time:1000},function(){});
+                }
+            });
+        })
+    })
+
+
+
+    function backType(i) {
+  /*      console.info(urls[i])
+        window.location.href=urls[i];*/
+    }
+</script>
+</body>
+
+
+<!-- Mirrored from ndesaintheme.com/themes/apricot/profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 Aug 2018 06:52:22 GMT -->
+</html>

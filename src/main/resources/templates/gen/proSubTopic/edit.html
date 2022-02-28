@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('专题表修改')"/>
+    <link th:href="@{/static/admin/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/admin/bootstarp/css/fileinput.min.css}" rel="stylesheet"/>
+    <style type="text/css">
+        .layui-flex-row{
+            display: flex;
+            flex-display: row;
+            -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+        }
+        .iconStyle{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 30px;
+            text-align: center;
+            line-height: 35px;
+        }
+        .text-black{
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action=""  th:object="${ProSubTopic}">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+				<div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主题id</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="*{topicId}" name="topicId" lay-verify="title"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">主题</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{topic}" type="text" name="topic" autocomplete="off" placeholder="主题" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">logo</label>
+                    <div class="layui-input-block layui-flex-row">
+                        <!--<input type="text" name="cover" autocomplete="off" placeholder="封面" class="layui-input">-->
+                        <input data-show-preview="false" data-allowed-file-extensions='["jpg","png"]' data-show-upload="true" class="layui-input file " type="file" id="logo1" name="logo1"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">浏览</label>
+                    <div class="layui-input-block layui-flex-row">
+                        <img style="width: auto;height: auto;max-width: 100%;max-height: 100%;" alt="" class="img-responsive-social"  id="logo2" name="logo2" th:src="*{logo}">
+                    </div>
+                </div>
+
+                <input id="logo" name="logo" th:value="*{logo}" type="hidden"/>
+
+		<!--		<div class="layui-form-item">
+                    <label class="layui-form-label">创作者数量</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{creator}" type="text" name="creator" autocomplete="off" placeholder="创作者数量" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">用户id</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{productNm}" type="text" name="productNm" autocomplete="off" placeholder="用户id" class="layui-input">
+                    </div>
+                </div>-->
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{description}" type="text" name="description" autocomplete="off" placeholder="描述" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">介绍</label>
+                    <div class="layui-input-block">
+                        <textarea th:value="*{introduce}" type="text" name="introduce" autocomplete="off" placeholder="" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">等级</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{rank}" type="text" readonly="true" name="rank" autocomplete="off" placeholder="等级" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">分值</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{grade}" readonly="true" type="text" name="grade" autocomplete="off" placeholder="分值" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">标签1</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{label1}" type="text" name="label1" autocomplete="off" placeholder="标签1" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">标签2</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{label2}" type="text" name="label2" autocomplete="off" placeholder="标签2" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">标签3</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{label3}" type="text" name="label3" autocomplete="off" placeholder="标签3" class="layui-input">
+                    </div>
+                </div>
+
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">简称</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{dn}" type="text" readonly="true"  name="dn" autocomplete="off" placeholder="简称" class="layui-input">
+                    </div>
+                </div>
+
+				<!--<div class="layui-form-item">
+                    <label class="layui-form-label">创建人Id</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{createBy}" readonly="true" type="text" name="createBy" autocomplete="off" placeholder="创建人Id" class="layui-input">
+                    </div>
+                </div>-->
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-block">
+                        <i class="iconStyle layui-icon layui-icon-time layui-bg-gray text-black"></i>
+                        <input class=" layui-input" readonly="true" style="padding-left: 40px" autocomplete="off" type="text" id="deadline" name="deadline" th:value="*{#dates.format(createDat,'yyyy-MM-dd HH:mm:ss')}">
+
+          <!--              <input th:value="${ProSubTopic.dateToStringConvert(ProSubTopic.createDat)}" type="text" name="createDat" autocomplete="off" placeholder="创建时间" class="layui-input datetime-input">-->
+                    </div>
+                </div>
+
+				<!--<div class="layui-form-item">
+                    <label class="layui-form-label">最后更新时间</label>
+                    <div class="layui-input-block">
+                        <input th:value="${ProSubTopic.dateToStringConvert(ProSubTopic.lUpdateDat)}" type="text" name="lUpdateDat" autocomplete="off" placeholder="最后更新时间" class="layui-input datetime-input">
+                    </div>
+                </div>-->
+
+				<!--<div class="layui-form-item">
+                    <label class="layui-form-label">是否删除</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{isDel}" type="text" name="isDel" autocomplete="off" placeholder="是否删除" class="layui-input">
+                    </div>
+                </div>-->
+
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit=""
+                    lay-filter="proSubTopic-update">
+                <i class="layui-icon layui-icon-ok"></i>
+				提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+				重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<!--- 文件上传插件  -->
+<script type="text/javascript"  th:src="@{/static/admin/bootstarp/js/fileinput.min.js}"></script>
+<script type="text/javascript"  th:src="@{/static/admin/bootstarp/js/locales/zh.js}"></script>
+<script>
+    const fileUrl=rootPath+"/FileController/uploadImage";
+
+    $('#logo1').fileinput({
+        /* theme: 'fa',*/
+        language: 'zh',
+        uploadAsync: true,//异步上传
+        showUpload: true, //是否显示上传按钮
+        uploadUrl: fileUrl,
+        allowedFileExtensions: ['jpg', 'png'],
+        enctype: 'multipart/form-data',
+        maxFileSize:0,
+        maxFileCount:1,
+        uploadExtraData: function() {   //额外参数的关键点
+            var obj = {
+                fileType:"1"
+            };
+            return obj;
+        }
+    }).on("filebatchselected", function(event, files) {
+
+        var reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = function (e) {
+            $('#logo2').attr('src',this.result);
+        };
+    }).on("fileuploaded", function(event,data) { //异步上传成功结果处理
+        if(data.response.code==200){
+            $("#logo").val(data.response.data);
+        }
+    }).on("filecleared",function (event,data){
+        $('#logo2').attr('src',"");
+    })
+    layui.use(['form','laydate','jquery'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let MODULE_PATH = rootPath+"/ProSubTopicController";
+		
+		var laydate = layui.laydate;
+        //同时绑定多个
+        lay('.datetime-input').each(function(){
+          laydate.render({
+            elem: this
+            ,trigger: 'click'
+            ,type: 'datetime'
+          });
+        });
+        form.on('submit(proSubTopic-update)', function (data) {
+            $.ajax({
+                url: MODULE_PATH+'/edit',
+                data: data.field,
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded',
+                type: 'post',
+                success: function (result) {
+                    if (result.code==200) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("proSubTopic-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

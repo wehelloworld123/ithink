@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.ithink.mapper.auto.UserCashoutApplyMapper">
+  <resultMap id="BaseResultMap" type="com.fc.ithink.model.auto.UserCashoutApply">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="cashout_acc_no" jdbcType="VARCHAR" property="cashoutAccNo" />
+    <result column="amt" jdbcType="DECIMAL" property="amt" />
+    <result column="act_amt" jdbcType="DECIMAL" property="actAmt" />
+    <result column="poundage" jdbcType="DECIMAL" property="poundage" />
+    <result column="finish" jdbcType="VARCHAR" property="finish" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_dat" jdbcType="TIMESTAMP" property="createDat" />
+    <result column="l_update_dat" jdbcType="TIMESTAMP" property="lUpdateDat" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="bank_flow_no" jdbcType="VARCHAR" property="bankFlowNo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+  
+	  	  	      	id,
+       	  	      	cashout_acc_no,
+       	  	      	amt,
+       	  	      	act_amt,
+       	  	      	poundage,
+       	  	      	finish,
+       	  	      	create_by,
+       	  	      	create_dat,
+       	  	      	l_update_dat,
+       	  	      	is_del,
+       	  	    	  	bank_flow_no
+       	  	
+  </sql>
+  
+  <select id="selectByExample" parameterType="com.fc.ithink.model.auto.UserCashoutApplyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user_cashout_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_cashout_apply
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    update t_user_cashout_apply
+    set is_del = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteByExample" parameterType="com.fc.ithink.model.auto.UserCashoutApplyExample">
+    update t_user_cashout_apply
+    is_del = 1
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <insert id="insert" parameterType="com.fc.ithink.model.auto.UserCashoutApply">
+    insert into t_user_cashout_apply (
+      	  	       id,
+       	  	       cashout_acc_no,
+       	  	       amt,
+       	  	       act_amt,
+       	  	       poundage,
+       	  	       finish,
+       	  	       create_by,
+       	  	       create_dat,
+       	  	       l_update_dat,
+       	  	       is_del,
+       	  	    	  bank_flow_no
+       	    )
+    values (
+	  	  	      	#{id,jdbcType=BIGINT},
+       	  	      	#{cashoutAccNo,jdbcType=VARCHAR},
+       	  	      	#{amt,jdbcType=DECIMAL},
+       	  	      	#{actAmt,jdbcType=DECIMAL},
+       	  	      	#{poundage,jdbcType=DECIMAL},
+       	  	      	#{finish,jdbcType=VARCHAR},
+       	  	      	#{createBy,jdbcType=VARCHAR},
+       	  	      	#{createDat,jdbcType=TIMESTAMP},
+       	  	      	#{lUpdateDat,jdbcType=TIMESTAMP},
+       	  	      	#{isDel,jdbcType=INTEGER},
+       	  	    	  #{bankFlowNo,jdbcType=VARCHAR}
+       	    )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.fc.ithink.model.auto.UserCashoutApply">
+    insert into t_user_cashout_apply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+          
+      <if test="id != null">
+        id,
+      </if>
+         
+      <if test="cashoutAccNo != null">
+        cashout_acc_no,
+      </if>
+         
+      <if test="amt != null">
+        amt,
+      </if>
+         
+      <if test="actAmt != null">
+        act_amt,
+      </if>
+         
+      <if test="poundage != null">
+        poundage,
+      </if>
+         
+      <if test="finish != null">
+        finish,
+      </if>
+         
+      <if test="createBy != null">
+        create_by,
+      </if>
+         
+      <if test="createDat != null">
+        create_dat,
+      </if>
+         
+      <if test="lUpdateDat != null">
+        l_update_dat,
+      </if>
+         
+      <if test="isDel != null">
+        is_del,
+      </if>
+         
+      <if test="bankFlowNo != null">
+        bank_flow_no,
+      </if>
+         </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+          <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+          <if test="cashoutAccNo != null">
+        #{cashoutAccNo,jdbcType=VARCHAR},
+      </if>
+          <if test="amt != null">
+        #{amt,jdbcType=DECIMAL},
+      </if>
+          <if test="actAmt != null">
+        #{actAmt,jdbcType=DECIMAL},
+      </if>
+          <if test="poundage != null">
+        #{poundage,jdbcType=DECIMAL},
+      </if>
+          <if test="finish != null">
+        #{finish,jdbcType=VARCHAR},
+      </if>
+          <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+          <if test="createDat != null">
+        #{createDat,jdbcType=TIMESTAMP},
+      </if>
+          <if test="lUpdateDat != null">
+        #{lUpdateDat,jdbcType=TIMESTAMP},
+      </if>
+          <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+          <if test="bankFlowNo != null">
+        #{bankFlowNo,jdbcType=VARCHAR},
+      </if>
+        </trim>
+  </insert>
+  
+  <select id="countByExample" parameterType="com.fc.ithink.model.auto.UserCashoutApplyExample" resultType="java.lang.Long">
+    select count(*) from t_user_cashout_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_user_cashout_apply
+    <set>
+          <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+          <if test="record.cashoutAccNo != null">
+        cashout_acc_no = #{record.cashoutAccNo,jdbcType=VARCHAR},
+      </if>
+          <if test="record.amt != null">
+        amt = #{record.amt,jdbcType=DECIMAL},
+      </if>
+          <if test="record.actAmt != null">
+        act_amt = #{record.actAmt,jdbcType=DECIMAL},
+      </if>
+          <if test="record.poundage != null">
+        poundage = #{record.poundage,jdbcType=DECIMAL},
+      </if>
+          <if test="record.finish != null">
+        finish = #{record.finish,jdbcType=VARCHAR},
+      </if>
+          <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+          <if test="record.createDat != null">
+        create_dat = #{record.createDat,jdbcType=TIMESTAMP},
+      </if>
+          <if test="record.lUpdateDat != null">
+        l_update_dat = #{record.lUpdateDat,jdbcType=TIMESTAMP},
+      </if>
+          <if test="record.isDel != null">
+        is_del = #{record.isDel,jdbcType=INTEGER},
+      </if>
+          <if test="record.bankFlowNo != null">
+        bank_flow_no = #{record.bankFlowNo,jdbcType=VARCHAR},
+      </if>
+         
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  
+  <update id="updateByExample" parameterType="map">
+    update t_user_cashout_apply
+    set
+            	     	 
+    	 id = #{record.id,jdbcType=BIGINT},
+    	         	     	 
+    	 cashout_acc_no = #{record.cashoutAccNo,jdbcType=VARCHAR},
+    	         	     	 
+    	 amt = #{record.amt,jdbcType=DECIMAL},
+    	         	     	 
+    	 act_amt = #{record.actAmt,jdbcType=DECIMAL},
+    	         	     	 
+    	 poundage = #{record.poundage,jdbcType=DECIMAL},
+    	         	     	 
+    	 finish = #{record.finish,jdbcType=VARCHAR},
+    	         	     	 
+    	 create_by = #{record.createBy,jdbcType=VARCHAR},
+    	         	     	 
+    	 create_dat = #{record.createDat,jdbcType=TIMESTAMP},
+    	         	     	 
+    	 l_update_dat = #{record.lUpdateDat,jdbcType=TIMESTAMP},
+    	         	     	 
+    	 is_del = #{record.isDel,jdbcType=INTEGER},
+    	         	     	 
+    	 bank_flow_no = #{record.bankFlowNo,jdbcType=VARCHAR}
+    	         
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  
+      <update id="updateByPrimaryKeySelective" parameterType="com.fc.ithink.model.auto.UserCashoutApply">
+    update t_user_cashout_apply
+    <set>
+                          
+      <if test="cashoutAccNo != null">
+        cashout_acc_no = #{cashoutAccNo,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="amt != null">
+        amt = #{amt,jdbcType=DECIMAL},
+      </if>
+                      
+      <if test="actAmt != null">
+        act_amt = #{actAmt,jdbcType=DECIMAL},
+      </if>
+                      
+      <if test="poundage != null">
+        poundage = #{poundage,jdbcType=DECIMAL},
+      </if>
+                      
+      <if test="finish != null">
+        finish = #{finish,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="createDat != null">
+        create_dat = #{createDat,jdbcType=TIMESTAMP},
+      </if>
+                      
+      <if test="lUpdateDat != null">
+        l_update_dat = #{lUpdateDat,jdbcType=TIMESTAMP},
+      </if>
+                      
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+                      
+      <if test="bankFlowNo != null">
+        bank_flow_no = #{bankFlowNo,jdbcType=VARCHAR},
+      </if>
+              </set>
+    
+    where 
+            
+    id = #{id,jdbcType=BIGINT}
+                                                                                          
+  </update>
+
+      	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	
+
+  <update id="updateByPrimaryKey" parameterType="com.fc.ithink.model.auto.UserCashoutApply">
+    update t_user_cashout_apply
+    set 
+    		 		 	  	  
+		cashout_acc_no = #{cashoutAccNo,jdbcType=VARCHAR},
+	  	 		 	  	  
+		amt = #{amt,jdbcType=DECIMAL},
+	  	 		 	  	  
+		act_amt = #{actAmt,jdbcType=DECIMAL},
+	  	 		 	  	  
+		poundage = #{poundage,jdbcType=DECIMAL},
+	  	 		 	  	  
+		finish = #{finish,jdbcType=VARCHAR},
+	  	 		 	  	  
+		create_by = #{createBy,jdbcType=VARCHAR},
+	  	 		 	  	  
+		create_dat = #{createDat,jdbcType=TIMESTAMP},
+	  	 		 	  	  
+		l_update_dat = #{lUpdateDat,jdbcType=TIMESTAMP},
+	  	 		 	  	  
+		is_del = #{isDel,jdbcType=INTEGER},
+	  	 		 	  		
+		bank_flow_no = #{bankFlowNo,jdbcType=VARCHAR}
+	  	 		
+    where 
+            
+    id = #{id,jdbcType=BIGINT}
+                                                                                            
+  </update>
+  
+                                                           
+</mapper>

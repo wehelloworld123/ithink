@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.ithink.mapper.auto.UserCashoutAccMapper">
+  <resultMap id="BaseResultMap" type="com.fc.ithink.model.auto.UserCashoutAcc">
+    <result column="no" jdbcType="VARCHAR" property="no" />
+    <result column="payee_way" jdbcType="VARCHAR" property="payeeWay" />
+    <result column="bank_nm" jdbcType="VARCHAR" property="bankNm" />
+    <result column="bank_code" jdbcType="VARCHAR" property="bankCode" />
+    <result column="payee_nm" jdbcType="VARCHAR" property="payeeNm" />
+    <result column="payee_acc" jdbcType="VARCHAR" property="payeeAcc" />
+    <result column="phone_no" jdbcType="VARCHAR" property="phoneNo" />
+    <result column="default_way" jdbcType="VARCHAR" property="defaultWay" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_dat" jdbcType="TIMESTAMP" property="createDat" />
+    <result column="l_update_dat" jdbcType="TIMESTAMP" property="lUpdateDat" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="bank_icon" jdbcType="VARCHAR" property="bankIcon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+  
+	  	  	      	no,
+       	  	      	payee_way,
+       	  	      	bank_nm,
+       	  	      	bank_code,
+       	  	      	payee_nm,
+       	  	      	payee_acc,
+       	  	      	phone_no,
+       	  	      	default_way,
+       	  	      	create_by,
+       	  	      	create_dat,
+       	  	      	l_update_dat,
+       	  	      	is_del,
+       	  	    	  	bank_icon
+       	  	
+  </sql>
+  
+  <select id="selectByExample" parameterType="com.fc.ithink.model.auto.UserCashoutAccExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user_cashout_acc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_cashout_acc
+    where no = #{no,jdbcType=VARCHAR}
+  </select>
+
+  <update id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update t_user_cashout_acc
+    set is_del = 1
+    where no = #{no,jdbcType=VARCHAR}
+  </update>
+  <update id="deleteByExample" parameterType="com.fc.ithink.model.auto.UserCashoutAccExample">
+    update t_user_cashout_acc
+    set is_del = 1
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <insert id="insert" parameterType="com.fc.ithink.model.auto.UserCashoutAcc">
+    insert into t_user_cashout_acc (
+      	  	       no,
+       	  	       payee_way,
+       	  	       bank_nm,
+       	  	       bank_code,
+       	  	       payee_nm,
+       	  	       payee_acc,
+       	  	       phone_no,
+       	  	       default_way,
+       	  	       create_by,
+       	  	       create_dat,
+       	  	       l_update_dat,
+       	  	       is_del,
+       	  	    	  bank_icon
+       	    )
+    values (
+	  	  	      	#{no,jdbcType=VARCHAR},
+       	  	      	#{payeeWay,jdbcType=VARCHAR},
+       	  	      	#{bankNm,jdbcType=VARCHAR},
+       	  	      	#{bankCode,jdbcType=VARCHAR},
+       	  	      	#{payeeNm,jdbcType=VARCHAR},
+       	  	      	#{payeeAcc,jdbcType=VARCHAR},
+       	  	      	#{phoneNo,jdbcType=VARCHAR},
+       	  	      	#{defaultWay,jdbcType=VARCHAR},
+       	  	      	#{createBy,jdbcType=VARCHAR},
+       	  	      	#{createDat,jdbcType=TIMESTAMP},
+       	  	      	#{lUpdateDat,jdbcType=TIMESTAMP},
+       	  	      	#{isDel,jdbcType=INTEGER},
+       	  	    	  #{bankIcon,jdbcType=VARCHAR}
+       	    )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.fc.ithink.model.auto.UserCashoutAcc">
+    insert into t_user_cashout_acc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+          
+      <if test="no != null">
+        no,
+      </if>
+         
+      <if test="payeeWay != null">
+        payee_way,
+      </if>
+         
+      <if test="bankNm != null">
+        bank_nm,
+      </if>
+         
+      <if test="bankCode != null">
+        bank_code,
+      </if>
+         
+      <if test="payeeNm != null">
+        payee_nm,
+      </if>
+         
+      <if test="payeeAcc != null">
+        payee_acc,
+      </if>
+         
+      <if test="phoneNo != null">
+        phone_no,
+      </if>
+         
+      <if test="defaultWay != null">
+        default_way,
+      </if>
+         
+      <if test="createBy != null">
+        create_by,
+      </if>
+         
+      <if test="createDat != null">
+        create_dat,
+      </if>
+         
+      <if test="lUpdateDat != null">
+        l_update_dat,
+      </if>
+         
+      <if test="isDel != null">
+        is_del,
+      </if>
+         
+      <if test="bankIcon != null">
+        bank_icon,
+      </if>
+         </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+          <if test="no != null">
+        #{no,jdbcType=VARCHAR},
+      </if>
+          <if test="payeeWay != null">
+        #{payeeWay,jdbcType=VARCHAR},
+      </if>
+          <if test="bankNm != null">
+        #{bankNm,jdbcType=VARCHAR},
+      </if>
+          <if test="bankCode != null">
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+          <if test="payeeNm != null">
+        #{payeeNm,jdbcType=VARCHAR},
+      </if>
+          <if test="payeeAcc != null">
+        #{payeeAcc,jdbcType=VARCHAR},
+      </if>
+          <if test="phoneNo != null">
+        #{phoneNo,jdbcType=VARCHAR},
+      </if>
+          <if test="defaultWay != null">
+        #{defaultWay,jdbcType=VARCHAR},
+      </if>
+          <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+          <if test="createDat != null">
+        #{createDat,jdbcType=TIMESTAMP},
+      </if>
+          <if test="lUpdateDat != null">
+        #{lUpdateDat,jdbcType=TIMESTAMP},
+      </if>
+          <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+          <if test="bankIcon != null">
+        #{bankIcon,jdbcType=VARCHAR},
+      </if>
+        </trim>
+  </insert>
+  
+  <select id="countByExample" parameterType="com.fc.ithink.model.auto.UserCashoutAccExample" resultType="java.lang.Long">
+    select count(*) from t_user_cashout_acc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_user_cashout_acc
+    <set>
+          <if test="record.no != null">
+        no = #{record.no,jdbcType=VARCHAR},
+      </if>
+          <if test="record.payeeWay != null">
+        payee_way = #{record.payeeWay,jdbcType=VARCHAR},
+      </if>
+          <if test="record.bankNm != null">
+        bank_nm = #{record.bankNm,jdbcType=VARCHAR},
+      </if>
+          <if test="record.bankCode != null">
+        bank_code = #{record.bankCode,jdbcType=VARCHAR},
+      </if>
+          <if test="record.payeeNm != null">
+        payee_nm = #{record.payeeNm,jdbcType=VARCHAR},
+      </if>
+          <if test="record.payeeAcc != null">
+        payee_acc = #{record.payeeAcc,jdbcType=VARCHAR},
+      </if>
+          <if test="record.phoneNo != null">
+        phone_no = #{record.phoneNo,jdbcType=VARCHAR},
+      </if>
+          <if test="record.defaultWay != null">
+        default_way = #{record.defaultWay,jdbcType=VARCHAR},
+      </if>
+          <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+          <if test="record.createDat != null">
+        create_dat = #{record.createDat,jdbcType=TIMESTAMP},
+      </if>
+          <if test="record.lUpdateDat != null">
+        l_update_dat = #{record.lUpdateDat,jdbcType=TIMESTAMP},
+      </if>
+          <if test="record.isDel != null">
+        is_del = #{record.isDel,jdbcType=INTEGER},
+      </if>
+          <if test="record.bankIcon != null">
+        bank_icon = #{record.bankIcon,jdbcType=VARCHAR},
+      </if>
+         
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  
+  <update id="updateByExample" parameterType="map">
+    update t_user_cashout_acc
+    set
+            	     	 
+    	 no = #{record.no,jdbcType=VARCHAR},
+    	         	     	 
+    	 payee_way = #{record.payeeWay,jdbcType=VARCHAR},
+    	         	     	 
+    	 bank_nm = #{record.bankNm,jdbcType=VARCHAR},
+    	         	     	 
+    	 bank_code = #{record.bankCode,jdbcType=VARCHAR},
+    	         	     	 
+    	 payee_nm = #{record.payeeNm,jdbcType=VARCHAR},
+    	         	     	 
+    	 payee_acc = #{record.payeeAcc,jdbcType=VARCHAR},
+    	         	     	 
+    	 phone_no = #{record.phoneNo,jdbcType=VARCHAR},
+    	         	     	 
+    	 default_way = #{record.defaultWay,jdbcType=VARCHAR},
+    	         	     	 
+    	 create_by = #{record.createBy,jdbcType=VARCHAR},
+    	         	     	 
+    	 create_dat = #{record.createDat,jdbcType=TIMESTAMP},
+    	         	     	 
+    	 l_update_dat = #{record.lUpdateDat,jdbcType=TIMESTAMP},
+    	         	     	 
+    	 is_del = #{record.isDel,jdbcType=INTEGER},
+    	         	     	 
+    	 bank_icon = #{record.bankIcon,jdbcType=VARCHAR}
+    	         
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  
+      <update id="updateByPrimaryKeySelective" parameterType="com.fc.ithink.model.auto.UserCashoutAcc">
+    update t_user_cashout_acc
+    <set>
+                          
+      <if test="payeeWay != null">
+        payee_way = #{payeeWay,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="bankNm != null">
+        bank_nm = #{bankNm,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="bankCode != null">
+        bank_code = #{bankCode,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="payeeNm != null">
+        payee_nm = #{payeeNm,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="payeeAcc != null">
+        payee_acc = #{payeeAcc,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="phoneNo != null">
+        phone_no = #{phoneNo,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="defaultWay != null">
+        default_way = #{defaultWay,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+                      
+      <if test="createDat != null">
+        create_dat = #{createDat,jdbcType=TIMESTAMP},
+      </if>
+                      
+      <if test="lUpdateDat != null">
+        l_update_dat = #{lUpdateDat,jdbcType=TIMESTAMP},
+      </if>
+                      
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+                      
+      <if test="bankIcon != null">
+        bank_icon = #{bankIcon,jdbcType=VARCHAR},
+      </if>
+              </set>
+    
+    where 
+            
+    no = #{no,jdbcType=VARCHAR}
+                                                                                                          
+  </update>
+
+      	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	
+
+  <update id="updateByPrimaryKey" parameterType="com.fc.ithink.model.auto.UserCashoutAcc">
+    update t_user_cashout_acc
+    set 
+    		 		 	  	  
+		payee_way = #{payeeWay,jdbcType=VARCHAR},
+	  	 		 	  	  
+		bank_nm = #{bankNm,jdbcType=VARCHAR},
+	  	 		 	  	  
+		bank_code = #{bankCode,jdbcType=VARCHAR},
+	  	 		 	  	  
+		payee_nm = #{payeeNm,jdbcType=VARCHAR},
+	  	 		 	  	  
+		payee_acc = #{payeeAcc,jdbcType=VARCHAR},
+	  	 		 	  	  
+		phone_no = #{phoneNo,jdbcType=VARCHAR},
+	  	 		 	  	  
+		default_way = #{defaultWay,jdbcType=VARCHAR},
+	  	 		 	  	  
+		create_by = #{createBy,jdbcType=VARCHAR},
+	  	 		 	  	  
+		create_dat = #{createDat,jdbcType=TIMESTAMP},
+	  	 		 	  	  
+		l_update_dat = #{lUpdateDat,jdbcType=TIMESTAMP},
+	  	 		 	  	  
+		is_del = #{isDel,jdbcType=INTEGER},
+	  	 		 	  		
+		bank_icon = #{bankIcon,jdbcType=VARCHAR}
+	  	 		
+    where 
+            
+    no = #{no,jdbcType=VARCHAR}
+                                                                                                            
+  </update>
+  
+                                                                     
+</mapper>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('用户提现账号新增')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">提现方式</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="payeeWay" autocomplete="off" placeholder="提现方式" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">银行名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="bankNm" autocomplete="off" placeholder="银行名称" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">银行代码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="bankCode" autocomplete="off" placeholder="银行代码" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">付款名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="payeeNm" autocomplete="off" placeholder="付款名称" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">付款账号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="payeeAcc" autocomplete="off" placeholder="付款账号" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">手机号码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="phoneNo" autocomplete="off" placeholder="手机号码" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">默认方法</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="defaultWay" autocomplete="off" placeholder="默认方法" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建人Id</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="createBy" autocomplete="off" placeholder="创建人Id" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="createDat" autocomplete="off" placeholder="创建时间" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">最后更新时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="lUpdateDat" autocomplete="off" placeholder="最后更新时间" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">是否删除</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="isDel" autocomplete="off" placeholder="是否删除" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <input type="text" name="bankIcon" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="userCashoutAcc-save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['form','laydate','jquery'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let MODULE_PATH = rootPath+"/UserCashoutAccController";
+		var laydate = layui.laydate;
+        //同时绑定多个
+        lay('.datetime-input').each(function(){
+          laydate.render({
+            elem: this
+            ,trigger: 'click'
+            ,type: 'datetime'
+          });
+        });
+        //保存
+        form.on('submit(userCashoutAcc-save)', function (data) {
+            $.ajax({
+                url: MODULE_PATH+'/add',
+                data: data.field,
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded',
+                type: 'post',
+                success: function (result) {
+                    if (result.code==200) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("userCashoutAcc-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:include="include :: header('绘画创作内容列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="searchText" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="proPaintContent-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="proPaintContent-table" lay-filter="proPaintContent-table"></table>
+    </div>
+</div>
+</body>
+
+<script type="text/html" id="proPaintContent-toolbar">
+    <button lay-event="back" class="pear-btn pear-btn-danger pear-btn-md">
+        <i class="layui-icon layui-icon-refresh"></i>
+        返回上一页
+    </button>
+    <button lay-event="back2" class="pear-btn pear-btn-danger pear-btn-md">
+        <i class="layui-icon layui-icon-refresh"></i>
+        返回文学作品
+    </button>
+</script>
+
+<script type="text/html" id="proPaintContent-bar">
+    <button shiro:hasPermission="gen:proPaintContent:adopt" class="pear-btn  pear-btn-sm layui-bg-blue" lay-event="adopt" title="采纳"><i class="layui-icon layui-icon-ok"></i>
+    </button>
+
+    <button shiro:hasPermission="gen:proPaintContent:edit" class="pear-btn pear-btn-warming pear-btn-sm" lay-event="edit" title="浏览"><i class="layui-icon layui-icon-read"></i>
+    </button>
+</script>
+
+
+<script type="text/html" id="proPaintContent-type">
+    {{#if (d.dataState == '0') { }}
+    <span class="layui-badge layui-bg-orange">开启</span>
+    {{# }else if(d.dataState == '-1'){ }}
+    <span class="layui-badge layui-bg-blue">关闭</span>
+    {{# } }}
+</script>
+<script type="text/html" id="adopt-type">
+    {{#if (d.adopt == 1) { }}
+    <span>是</span>
+    {{# }else if(d.adopt == '0'){ }}
+    <span>否</span>
+    {{# } }}
+</script>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        let MODULE_PATH = rootPath+"/ProPaintContentController/";
+        var MODULE_PATH2 = rootPath+"/ProPaintController/";
+        let cols = [
+            [
+                /*{type: 'checkbox'},*/
+
+                {title: '编号', field: 'no', width: 150,align: 'center'},
+
+                {title: '标题', field: 'title', width: 150,align: 'center'},
+
+                {title: '介绍', field: 'content', width: 200,align: 'center'},
+
+                /* {title: '内容', field: 'content', align: 'center'},*/
+
+                /*{title: '图片', field: 'pic', align: 'center'},*/
+
+                /*  {title: '章节编号', field: 'charpId', align: 'center'},
+
+                  {title: '章节名称', field: 'charpName', align: 'center'},
+
+                  {title: '小节名称', field: 'secName', align: 'center'},
+
+                  {title: '书籍编号', field: 'bookId', align: 'center'},
+
+                  {title: '书籍名称', field: 'bookName', align: 'center'},*/
+
+                {title: '点赞数', field: 'likes', width:80,align: 'center'},
+
+                {title: '推荐数', field: 'recomNo', width:80,align: 'center'},
+
+                /*{title: '展示', field: 'views', align: 'center'},*/
+
+
+
+                /*{title: '点赞数', field: 'favorer', align: 'center'},*/
+
+                {title: '作者', field: 'creator', align: 'center'},
+
+                {title: 'Tnk 号', field: 'createBy', align: 'center'},
+
+                {title: '时间', field: 'createDat', align: 'center'},
+
+                /*{title: '更新时间', field: 'lUpdateDat', align: 'center'},*/
+
+                /*{title: '删除', field: 'isDel', align: 'center'},*/
+
+                /*{title: '', field: 'detail', align: 'center'},*/
+                {title: '采纳', field: 'adopt', align: 'center',width:50,toolbar: '#adopt-type'},
+
+                {title: '操作', toolbar: '#proPaintContent-bar', align: 'center'}
+            ]
+        ]
+
+        //table表单列表
+        table.render({
+            elem: '#proPaintContent-table',
+            url: MODULE_PATH + 'list3?partId=[[${partId}]]',
+            page: true,
+            method: 'get',
+            cols: cols,
+            skin: 'line',
+            toolbar: '#proPaintContent-toolbar',
+            defaultToolbar: [{
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+        //table图标事件绑定
+        table.on('tool(proPaintContent-table)', function (obj) {
+            if (obj.event === 'adopt') {
+                window.adopt(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        //table工具栏绑定
+        table.on('toolbar(proPaintContent-table)', function (obj) {
+            if (obj.event === 'back') {
+                window.back();
+            }if (obj.event === 'back2') {
+                window.back2();
+            }  else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        //查询按钮绑定
+        form.on('submit(proPaintContent-query)', function (data) {
+            table.reload('proPaintContent-table', {where: data.field})
+            return false;
+        });
+
+
+        //采纳
+        window.adopt = function (obj) {
+            if(obj.data['adopt']==1){
+                layer.msg("作品已采纳，不可操作", {icon: 2, time: 1000});
+                return;
+            }
+            layer.confirm('确定要采纳该创作', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "adopt",
+                    dataType: 'json',
+                    type: 'post',
+                    data:{
+                        no:obj.data['no'],
+                        partId:"[[${partId}]]"
+                    },
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                table.reload('proPaintContent-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+        window.back = function (obj) {
+            window.history.back(-1);
+        }
+        window.back2 = function (obj) {
+            window.history.back(-2);
+        }
+        //修改
+        window.edit = function (obj) {
+            layer.open({
+                type: 2,
+                title: '作品详情',
+                shade: 0.1,
+                area: ['100%', '100%'],
+                content: MODULE_PATH + 'edit/' + obj.data['no']
+            });
+        }
+        //删除
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + obj.data['id'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        //批量删除
+        window.batchRemove = function (obj) {
+            let data = table.checkStatus(obj.config.id).data;
+            if (data.length === 0) {
+                layer.msg("未选中数据", {icon: 3, time: 1000});
+                return false;
+            }
+            let ids = "";
+            for (let i = 0; i < data.length; i++) {
+                ids += data[i].id + ",";
+            }
+            ids = ids.substr(0, ids.length - 1);
+            layer.confirm('确定要删除这些数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                table.reload('proPaintContent-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+        //刷新按钮
+        window.refresh = function () {
+            table.reload('proPaintContent-table');
+        }
+    })
+</script>
+</html>

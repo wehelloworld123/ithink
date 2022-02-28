@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fc.ithink.mapper.auto.TsysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.fc.ithink.model.auto.TsysUser" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="nickname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="avatar" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sex" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="description" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="label" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="think" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="write_auth" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="auth_sts" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_dat" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="l_update_dat" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="is_del" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="dep_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="pos_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  
+  <resultMap id="BaseResultMapOther" type="com.fc.ithink.model.auto.TsysUser">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="think" jdbcType="INTEGER" property="think" />
+    <result column="write_auth" jdbcType="VARCHAR" property="writeAuth" />
+    <result column="auth_sts" jdbcType="VARCHAR" property="authSts" />
+    <result column="create_dat" jdbcType="TIMESTAMP" property="createDat" />
+    <result column="l_update_dat" jdbcType="TIMESTAMP" property="lUpdateDat" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="dep_id" jdbcType="INTEGER" property="depId" />
+    <result column="pos_id" jdbcType="VARCHAR" property="posId" />
+    <result column="dep_name" jdbcType="INTEGER" property="depName" />
+    <result column="pos_name" jdbcType="VARCHAR" property="posName" />
+  </resultMap>
+  
+
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, username, avatar, sex,nickname,email,auth_sts, dep_id, pos_id,create_dat,description,l_update_dat
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMapOther" parameterType="com.fc.ithink.model.auto.TsysUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMapOther" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,(select dept_name from t_sys_department dep where dep.id=tsu.dep_id) as dep_name,
+	(select post_name from t_sys_position pos where pos.id=tsu.pos_id) as pos_name
+    from t_sys_user tsu
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fc.ithink.model.auto.TsysUserExample" >
+    delete from t_sys_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.fc.ithink.model.auto.TsysUser" >
+    insert into t_sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+
+      <if test="depId != null">
+        dep_id,
+      </if>
+      <if test="posId != null">
+        pos_id,
+      </if>
+
+      <if test="email != null">
+        email,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="label != null">
+        label,
+      </if>
+      <if test="think != null">
+        think,
+      </if>
+      <if test="authSts != null">
+        auth_sts,
+      </if>
+      <if test="writeAuth != null">
+        write_auth,
+      </if>
+      <if test="createDat != null">
+        create_dat,
+      </if>
+      <if test="lUpdateDat != null">
+        l_update_dat,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="depId != null">
+        #{depId,jdbcType=INTEGER},
+      </if>
+      <if test="posId != null">
+        #{posId,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="think != null">
+        #{think,jdbcType=INTEGER},
+      </if>
+      <if test="authSts != null">
+        #{authSts,jdbcType=VARCHAR},
+      </if>
+      <if test="writeAuth != null">
+        #{writeAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="createDat != null">
+        #{createDat,jdbcType=DATE},
+      </if>
+      <if test="lUpdateDat != null">
+        #{lUpdateDat,jdbcType=DATE},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fc.ithink.model.auto.TsysUserExample" resultType="java.lang.Integer" >
+    select count(*) from t_sys_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_sys_user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.label != null">
+        label = #{record.label,jdbcType=VARCHAR},
+      </if>
+      <if test="record.think != null">
+        think = #{record.think,jdbcType=INTEGER},
+      </if>
+      <if test="record.authSts != null">
+        auth_sts = #{record.authSts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.writeAuth != null">
+        write_auth = #{record.writeAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDat != null">
+        create_dat = #{record.createDat,jdbcType=DATE},
+      </if>
+      <if test="record.isDel != null">
+        is_del = #{record.isDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.depId != null" >
+        dep_id = #{record.depId,jdbcType=INTEGER},
+      </if>
+      <if test="record.posId != null" >
+        pos_id = #{record.posId,jdbcType=VARCHAR},
+      </if>
+      l_update_dat = now(),
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_sys_user
+    set id = #{record.id,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      label = #{record.label,jdbcType=VARCHAR},
+      think = #{record.think,jdbcType=INTEGER},
+      auth_sts = #{record.authSts,jdbcType=VARCHAR},
+      write_auth = #{record.writeAuth,jdbcType=VARCHAR},
+      create_dat = #{record.createDat,jdbcType=DATE},
+      l_update_dat = now(),
+      is_del = #{record.isDel,jdbcType=INTEGER},
+      dep_id = #{record.depId,jdbcType=INTEGER},
+      pos_id = #{record.posId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fc.ithink.model.auto.TsysUser" >
+    update t_sys_user
+    <set >
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="think != null">
+        think = #{think,jdbcType=INTEGER},
+      </if>
+      <if test="authSts != null">
+        auth_sts = #{authSts,jdbcType=VARCHAR},
+      </if>
+      <if test="writeAuth != null">
+        write_auth = #{writeAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="createDat != null">
+        create_dat = #{createDat,jdbcType=DATE},
+      </if>
+      l_update_dat = now(),
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="depId != null" >
+        dep_id = #{depId,jdbcType=INTEGER},
+      </if>
+      <if test="posId != null" >
+        pos_id = #{posId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fc.ithink.model.auto.TsysUser" >
+    update t_sys_user
+    set username = #{username,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        nickname = #{nickname,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        avatar = #{avatar,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=INTEGER},
+        description = #{description,jdbcType=VARCHAR},
+        label = #{label,jdbcType=VARCHAR},
+        think = #{think,jdbcType=INTEGER},
+        auth_sts = #{authSts,jdbcType=VARCHAR},
+        write_auth = #{writeAuth,jdbcType=VARCHAR},
+        create_dat = #{createDat,jdbcType=DATE},
+        l_update_dat = now(),
+        is_del = #{isDel,jdbcType=INTEGER},
+        dep_id = #{depId,jdbcType=INTEGER},
+        pos_id = #{posId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+
+  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMapOther">
+    select id,
+           username,
+           password,
+           nickname,
+           email,
+           avatar,
+           sex,
+           description,
+           label,
+           think,
+           write_auth,
+           auth_sts,
+           create_dat,
+           l_update_dat,
+           dep_id,
+           pos_id,
+           is_del
+    from t_sys_user
+    where username=#{username}
+  </select>
+
+
+  <select id="selectUserInfoByIdOrName" parameterType="java.lang.String" resultType="java.util.HashMap">
+    select
+      id,
+      nickname,
+      avatar,
+      sex,
+      description,
+      label
+    from t_sys_user
+    where is_del = 0
+    and (id = #{username,jdbcType=VARCHAR}  or nickname=#{username,jdbcType=VARCHAR})
+  </select>
+
+  <select id="selectUserInfoByUserId" parameterType="java.lang.String" resultMap="BaseResultMapOther">
+    select
+      id,
+      username,
+      nickname,
+      email,
+      avatar,
+      sex,
+      description,
+      label,
+      think,
+      write_auth,
+      auth_sts
+    from t_sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+
+  <insert id="insert" parameterType="com.fc.ithink.model.auto.TsysUser">
+    insert into
+      t_sys_user
+    (
+      id,
+      username,
+      password,
+      nickname,
+      email,
+      avatar,
+      sex,
+      description,
+      label,
+      think,
+      auth_sts,
+      write_auth,
+      create_dat,
+      l_update_dat,
+      is_del
+    )
+    values (
+             #{id,jdbcType=VARCHAR},
+             #{username,jdbcType=VARCHAR},
+             #{password,jdbcType=VARCHAR},
+             #{nickname,jdbcType=VARCHAR},
+
+             #{email,jdbcType=VARCHAR},
+             #{avatar,jdbcType=VARCHAR},
+             #{sex,jdbcType=INTEGER},
+             #{description,jdbcType=VARCHAR},
+             #{label,jdbcType=VARCHAR},
+             #{think,jdbcType=INTEGER},
+             #{authSts,jdbcType=VARCHAR},
+             #{writeAuth,jdbcType=VARCHAR},
+             now(),
+             now(),
+             #{isDel,jdbcType=INTEGER}
+           )
+  </insert>
+
+
+  <update id="updateUserAuthSts"  parameterType="com.fc.ithink.model.auto.TsysUser">
+    update t_sys_user
+    set
+    auth_sts = #{authSts}
+    where is_del = '0'
+    and  username = #{username,jdbcType=VARCHAR}
+    <if test="id != null and id != ''">
+      and  id = #{id,jdbcType=VARCHAR}
+    </if>
+  </update>
+
+  <update id="updateUserWriteAuth"  parameterType="com.fc.ithink.model.auto.TsysUser">
+    update t_sys_user
+    set
+    write_auth = #{writeAuth}
+    where is_del = '0'
+    and  id = #{id,jdbcType=VARCHAR}
+    <if test="username != null and id != ''">
+      and  username = #{username,jdbcType=VARCHAR}
+    </if>
+  </update>
+
+  <update id="deleteBatchByPrimaryKey" parameterType="java.util.List">
+    update t_sys_user
+    set
+    is_del = '1'
+    where id in
+    <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+    and is_del = '0'
+  </update>
+
+  <update id="deleteStsByKey" parameterType="com.fc.ithink.model.auto.TsysUser">
+    update t_sys_user
+    SET is_del = #{isDel}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <update id="deleteUserByPrimaryKey" parameterType="java.util.List">
+    update t_sys_user
+    set
+    is_del = '2'
+    where id in
+    <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+    and is_del = '0'
+  </update>
+
+  <update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+    update t_sys_user
+    set
+    is_del = 0
+    where id in
+    <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </update>
+</mapper>

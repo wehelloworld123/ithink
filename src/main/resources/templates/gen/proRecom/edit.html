@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('创作推荐表修改')"/>
+</head>
+<body>
+<form class="layui-form" action=""  th:object="${ProRecom}">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+				<div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="*{id}" name="id" lay-verify="title"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{content}" type="text" name="content" autocomplete="off" placeholder="内容" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">章节Id</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{contentId}" type="text" name="contentId" autocomplete="off" placeholder="章节Id" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{title}" type="text" name="title" autocomplete="off" placeholder="标题" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">摘要</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{summary}" type="text" name="summary" autocomplete="off" placeholder="摘要" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{typ}" type="text" name="typ" autocomplete="off" placeholder="类型" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">点赞</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{likes}" type="text" name="likes" autocomplete="off" placeholder="点赞" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">点赞用户字串</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{favorer}" type="text" name="favorer" autocomplete="off" placeholder="点赞用户字串" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">推荐人</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{creator}" type="text" name="creator" autocomplete="off" placeholder="推荐人" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">推荐人头像</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{createAvat}" type="text" name="createAvat" autocomplete="off" placeholder="推荐人头像" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{createSex}" type="text" name="createSex" autocomplete="off" placeholder="性别" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">采纳</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{adopt}" type="text" name="adopt" autocomplete="off" placeholder="采纳" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建人Id</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{createBy}" type="text" name="createBy" autocomplete="off" placeholder="创建人Id" class="layui-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-block">
+                        <input th:value="${ProRecom.dateToStringConvert(ProRecom.createDat)}" type="text" name="createDat" autocomplete="off" placeholder="创建时间" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">最后更新时间</label>
+                    <div class="layui-input-block">
+                        <input th:value="${ProRecom.dateToStringConvert(ProRecom.lUpdateDat)}" type="text" name="lUpdateDat" autocomplete="off" placeholder="最后更新时间" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">删除</label>
+                    <div class="layui-input-block">
+                        <input th:value="*{isDel}" type="text" name="isDel" autocomplete="off" placeholder="删除" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit=""
+                    lay-filter="proRecom-update">
+                <i class="layui-icon layui-icon-ok"></i>
+				提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+				重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['form','laydate','jquery'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let MODULE_PATH = rootPath+"/ProRecomController";
+		
+		var laydate = layui.laydate;
+        //同时绑定多个
+        lay('.datetime-input').each(function(){
+          laydate.render({
+            elem: this
+            ,trigger: 'click'
+            ,type: 'datetime'
+          });
+        });
+        form.on('submit(proRecom-update)', function (data) {
+            $.ajax({
+                url: MODULE_PATH+'/edit',
+                data: data.field,
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded',
+                type: 'post',
+                success: function (result) {
+                    if (result.code==200) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("proRecom-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

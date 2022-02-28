@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('用户提现账号列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="searchText" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="userCashoutAcc-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                   	 查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+					重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="userCashoutAcc-table" lay-filter="userCashoutAcc-table"></table>
+    </div>
+</div>
+</body>
+
+<!--<script type="text/html" id="userCashoutAcc-toolbar">
+    <button shiro:hasPermission="gen:userCashoutAcc:add" class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+		 新增
+    </button>
+    <button shiro:hasPermission="gen:userCashoutAcc:remove" class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+        <i class="layui-icon layui-icon-delete"></i>
+		删除
+    </button>
+</script>-->
+
+<script type="text/html" id="userCashoutAcc-bar">
+<!--
+    <button shiro:hasPermission="gen:userCashoutAcc:edit" class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit" title="修改"><i class="layui-icon layui-icon-edit"></i>
+    </button>
+-->
+
+    <button shiro:hasPermission="gen:userCashoutAcc:remove" class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove" title="删除"><i class="layui-icon layui-icon-delete"></i>
+    </button>
+</script>
+
+
+<script type="text/html" id="userCashoutAcc-type">
+    {{#if (d.dataState == '0') { }}
+    <span class="layui-badge layui-bg-orange">开启</span>
+    {{# }else if(d.dataState == '-1'){ }}
+    <span class="layui-badge layui-bg-blue">关闭</span>
+    {{# } }}
+</script>
+<script type="text/html" id="del-type">
+
+    {{#if (d.isDel == 1) { }}
+    <span class="layui-badge layui-bg-red">是</span>
+    {{# }else if(d.isDel == 0){ }}
+    <span class="layui-badge layui-bg-blue">否</span>
+
+
+    {{# } }}
+</script>
+<script type="text/html" id="way-type">
+
+    {{#if (d.defaultWay == 1) { }}
+    <span class="layui-badge layui-bg-blue">是</span>
+
+
+    {{# } }}
+</script>
+<script type="text/html" id="payeeway-type">
+
+    {{#if (d.payeeWay == '0') { }}
+    <span>微信</span>
+    {{# }else if(d.payeeWay == '1'){ }}
+    <span>支付宝</span>
+    {{# }else if(d.payeeWay == '2'){ }}
+    <span>银行卡</span>
+
+    {{# } }}
+</script>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        let MODULE_PATH = rootPath+"/UserCashoutAccController/";
+        let cols = [
+            [
+               /* {type: 'checkbox'},*/
+                
+                					{title: '编号', field: 'no', align: 'center',width: 200},
+					
+									{title: '提现方式', field: 'payeeWay', align: 'center',width: 60,toolbar: '#payeeway-type'},
+					
+									{title: '银行名称', field: 'bankNm', align: 'center'},
+					
+									{title: '银行代码', field: 'bankCode',width:60, align: 'center'},
+					
+									{title: '付款名称', field: 'payeeNm', align: 'center'},
+					
+									{title: '付款账号', field: 'payeeAcc', align: 'center'},
+					
+									{title: '手机号码', field: 'phoneNo', align: 'center'},
+					
+									{title: '默认方式', field: 'defaultWay',width:100, align: 'center',toolbar: '#way-type'},
+					
+									{title: 'Tnk 号', field: 'createBy', align: 'center'},
+					
+									{title: '创建时间', field: 'createDat', align: 'center'},
+					
+									/*{title: '最后更新时间', field: 'lUpdateDat', align: 'center'},*/
+					
+									{title: '删除', field: 'isDel', align: 'center',width:50,toolbar: '#del-type'},
+					
+									/*{title: '', field: 'bankIcon', align: 'center'},*/
+					
+				                
+                {title: '操作', toolbar: '#userCashoutAcc-bar', align: 'center'}
+            ]
+        ]
+
+        //table表单列表
+        table.render({
+            elem: '#userCashoutAcc-table',
+            url: MODULE_PATH + 'list',
+            page: true,
+            method: 'get',
+            cols: cols,
+            skin: 'line',
+            toolbar: '#userCashoutAcc-toolbar',
+            defaultToolbar: [{
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+        //table图标事件绑定
+        table.on('tool(userCashoutAcc-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        //table工具栏绑定
+        table.on('toolbar(userCashoutAcc-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        //查询按钮绑定
+        form.on('submit(userCashoutAcc-query)', function (data) {
+            table.reload('userCashoutAcc-table', {where: data.field})
+            return false;
+        });
+
+
+        //添加
+        window.add = function () {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shade: 0.1,
+                area: ['500px', '500px'],
+                content: MODULE_PATH + 'add'
+            });
+        }
+        //修改
+        window.edit = function (obj) {
+            layer.open({
+                type: 2,
+                title: '修改',
+                shade: 0.1,
+                area: ['500px', '500px'],
+                content: MODULE_PATH + 'edit/' + obj.data['id']
+            });
+        }
+        //删除
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + obj.data['id'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        //批量删除
+        window.batchRemove = function (obj) {
+            let data = table.checkStatus(obj.config.id).data;
+            if (data.length === 0) {
+                layer.msg("未选中数据", {icon: 3, time: 1000});
+                return false;
+            }
+            let ids = "";
+            for (let i = 0; i < data.length; i++) {
+                ids += data[i].id + ",";
+            }
+            ids = ids.substr(0, ids.length - 1);
+            layer.confirm('确定要删除这些数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                table.reload('userCashoutAcc-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+        //刷新按钮
+        window.refresh = function () {
+            table.reload('userCashoutAcc-table');
+        }
+    })
+</script>
+</html>

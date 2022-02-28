@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('绘画作品章节新增')"/>
+    <link th:href="@{/static/admin/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/admin/bootstarp/css/fileinput.min.css}" rel="stylesheet"/>
+    <style type="text/css">
+        .hide{
+            display: none;
+        }
+        .layui-flex-row{
+            display: flex;
+            flex-display: row;
+            -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+        }
+        label.layui-form-label{
+            width: 110px;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">主题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="subject" autocomplete="off" placeholder="题" lay-verify="subject" class="layui-input">
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">展示图</label>
+                    <div class="layui-input-block layui-flex-row">
+                        <!--<input type="text" name="pic" autocomplete="off" placeholder="图片" class="layui-input">-->
+                        <input data-show-preview="false" data-allowed-file-extensions='["jpg","png"]' data-show-upload="true" class="layui-input file " type="file" id="pic1" name="pic1"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">浏览</label>
+                    <div class="layui-input-block">
+                        <img style="width: auto;height: auto;max-width: 100%;max-height: 100%;" alt="" class="img-responsive-social"  id="pic2" name="pic2" th:src="*{pic1}">
+                    </div>
+                </div>
+
+                <input id="pic" name="pic" type="hidden"/>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">说明</label>
+                    <div class="layui-input-block">
+                        <textarea type="text" name="introduce" autocomplete="off" placeholder="说明" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">创作要求</label>
+                    <div class="layui-input-block">
+                        <textarea type="text" name="requirement" autocomplete="off" placeholder="创作要求" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
+
+                <!--		<div class="layui-form-item">
+                            <label class="layui-form-label">类型</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="chapType" autocomplete="off" placeholder="类型" class="layui-input">
+                            </div>
+                        </div>-->
+
+
+                <!--<div class="layui-form-item">
+                    <label class="layui-form-label">标签</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="label" autocomplete="off" placeholder="标签" class="layui-input">
+                    </div>
+                </div>-->
+
+
+                <!--		<div class="layui-form-item">
+                            <label class="layui-form-label">创作人员数</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="creators" autocomplete="off" placeholder="创作人员数" class="layui-input">
+                            </div>
+                        </div>
+        -->
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">主卷</label>
+                    <div class="layui-input-block">
+                        <select id="root" name="root" class="layui-input valid" aria-invalid="false" lay-filter="rootChange">
+                            <option value="0" selected="selected">否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="father" class="layui-form-item">
+                    <label class="layui-form-label">主卷序号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="rootOrd" autocomplete="off" placeholder="主序号" class="layui-input" lay-verify="required|rootminIndex|rootmaxIndex">
+                    </div>
+                </div>
+
+                <div id="child">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">父卷编号</label>
+                        <div class="layui-input-block">
+                            <select id="rootId" name="rootId" class="layui-input valid" aria-invalid="false">
+                                <th:block  th:each="obj : ${parts}">
+                                    <option th:value="${obj.id}"><p  th:text="${obj.title}"></p></option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">序号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ord" autocomplete="off" placeholder="序号" class="layui-input" lay-verify="required|minIndex|maxIndex">
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">锁</label>
+                        <div class="layui-input-block">
+                            <select id="isLock" name="isLock" class="layui-input valid" aria-invalid="false">
+                                <option value="0">否</option>
+                                <option value="1"  selected="selected">是</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">关联文学编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="literId" autocomplete="off" placeholder="关联文学编号" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关联诗词编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="poemId" autocomplete="off" placeholder="关联诗词编号" class="layui-input">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">作品编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="paintId" readonly="true" autocomplete="off" placeholder="作品编号" class="layui-input"  th:value="*{paintId}">
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+                <!--	<div class="layui-form-item">
+                        <label class="layui-form-label">完成</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="finish" autocomplete="off" placeholder="完成" class="layui-input">
+                        </div>
+                    </div>-->
+
+
+
+
+
+                <!--	<div class="layui-form-item">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="number" autocomplete="off" placeholder="" class="layui-input">
+                        </div>
+                    </div>
+    -->
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="proPaintPart-save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<!--- bootstrap插件  -->
+<script type="text/javascript" th:src="@{/static/admin/bootstarp/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/static/admin/bootstarp/js/bootstrap.bundle.js}"></script>
+<!--- 文件上传插件  -->
+<script type="text/javascript"  th:src="@{/static/admin/bootstarp/js/fileinput.min.js}"></script>
+<script type="text/javascript"  th:src="@{/static/admin/bootstarp/js/locales/zh.js}"></script>
+<script>
+    var fileUrl=rootPath+"/FileController/uploadImage";
+
+    var rootminIndex = 0;
+    var rootmaxIndex = [[${rootmaxIndex}]];
+    var minIndex = 0;
+    var maxIndex = [[${maxIndex}]];
+    var rootOrdReq = false;
+    var rootIdReq = false;
+    var list=[];
+
+    $(function(){
+        var root = $("#root").val();
+        if (root==1) {//主序号
+            rootOrdReq = true;
+            rootIdReq = false;
+
+            $('#child').addClass("hide");
+            $('#father').removeClass("hide");
+            return true;
+        }
+        else if(root==0) {
+            rootOrdReq = false;
+            rootIdReq = true;
+
+            $('#child').removeClass("hide");
+            $('#father').addClass("hide");
+
+            return true;
+        }else{}
+    });
+    $('#pic1').fileinput({
+        /* theme: 'fa',*/
+        language: 'zh',
+        uploadAsync: true,//异步上传
+        showUpload: true, //是否显示上传按钮
+        uploadUrl: fileUrl,
+        allowedFileExtensions: ['jpg', 'png'],
+        enctype: 'multipart/form-data',
+        maxFileSize:0,
+        maxFileCount:1,
+        uploadExtraData: function() {   //额外参数的关键点
+            var obj = {
+                fileType:"01"
+            };
+            return obj;
+        }
+    }).on("filebatchselected", function(event, files) {
+        var reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = function (e) {
+            $('#pic2').attr('src',this.result);
+        };
+        //$("#logo2").attr("src",$("#logo1").val());
+    }).on("fileuploaded", function(event,data) { //异步上传成功结果处理
+        if(data.response.code==200){
+            $("#pic").val(data.response.data);
+        }
+    }).on("filecleared",function (event,data){
+        $('#pic2').attr('src',"");
+    })
+
+
+    layui.use(['form','laydate','jquery'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let MODULE_PATH = rootPath+"/ProPaintPartController";
+        var laydate = layui.laydate;
+        //同时绑定多个
+        lay('.datetime-input').each(function(){
+            laydate.render({
+                elem: this
+                ,trigger: 'click'
+                ,type: 'datetime'
+            });
+        });
+
+        //名称验证
+        form.verify({
+
+            name: function(value){
+                if(value==null||value=="") {
+                    $("#name").addClass("alertClass").focus();
+                    return '请输入章节命题';
+                }else{
+                    $("#name").removeClass("alertClass");
+                }
+
+
+            },
+            rootmaxIndex:function (value){
+                if(value>rootmaxIndex){
+                    return '输入不能大于'+rootmaxIndex;
+                }
+            },
+            rootminIndex:function (value){
+                if(value<rootminIndex){
+                    return '输入不能小于'+rootminIndex;
+                }
+            },
+            maxIndex:function (value){
+                if(value>maxIndex){
+                    return '输入不能大于'+maxIndex;
+                }
+            },
+            minIndex:function (value){
+                if(value<minIndex){
+                    return '输入不能小于'+minIndex;
+                }
+            },
+            Integer:[
+                /^[1-9]\d*$/
+                ,'只能输入整数'
+            ],
+
+
+        });
+
+        //保存
+        form.on('submit(proPaintPart-save)', function (data) {
+            $.ajax({
+                url: MODULE_PATH+'/add',
+                data: data.field,
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded',
+                type: 'post',
+                success: function (result) {
+                    if (result.code==200) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("proPaintPart-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+
+
+
+        form.on('select(rootChange)', function (data) {
+            var root = $("#root").val();
+            if (root==1) {//主序号
+                rootOrdReq = true;
+                rootIdReq = false;
+                /*rootminIndex = data.data.minIndex+1;
+                rootmaxIndex = data.data.maxIndex;*/
+                //$("#rootId").empty();
+
+                //$('#rootId').attr("disabled","disabled");
+                $('#child').addClass("hide");
+                $('#father').removeClass("hide");
+                return true;
+            }
+            else if(root==0) {
+                rootOrdReq = false;
+                rootIdReq = true;
+                //$('#rootId').removeAttr("disabled");
+                $('#child').removeClass("hide");
+                $('#father').addClass("hide");
+                /*var arr = JSON.parse(array);
+                for(var i in arr) {
+                    $("#rootId").append("<option value='" + arr[i].rootId+ "'>"+arr[i].title+"</option>");
+                    list.push(arr[i].count+1);//序号
+                }*/
+                return true;
+            }
+            else {
+                $.modal.alertError("数据错误");
+                return true;
+            }
+            return false;
+        });
+
+    })
+
+
+</script>
+</body>
+</html>

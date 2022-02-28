@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('文学创作内容新增')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" autocomplete="off" placeholder="标题" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <input type="text" name="summary" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="content" autocomplete="off" placeholder="内容" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">图片</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="pic" autocomplete="off" placeholder="图片" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">章节编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="charpId" autocomplete="off" placeholder="章节编号" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">章节名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="charpName" autocomplete="off" placeholder="章节名称" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">小节名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="secName" autocomplete="off" placeholder="小节名称" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">书籍编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="bookId" autocomplete="off" placeholder="书籍编号" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">书籍名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="bookName" autocomplete="off" placeholder="书籍名称" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">点赞</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="likes" autocomplete="off" placeholder="点赞" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">推荐</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="recomNo" autocomplete="off" placeholder="推荐" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">展示</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="views" autocomplete="off" placeholder="展示" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">采纳</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="adopt" autocomplete="off" placeholder="采纳" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">点赞人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="favorer" autocomplete="off" placeholder="点赞人" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="creator" autocomplete="off" placeholder="创建人" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建人Id</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="createBy" autocomplete="off" placeholder="创建人Id" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="createDat" autocomplete="off" placeholder="创建时间" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">更新时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="lUpdateDat" autocomplete="off" placeholder="更新时间" class="layui-input datetime-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label">删除</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="isDel" autocomplete="off" placeholder="删除" class="layui-input">
+                    </div>
+                </div>
+
+
+				<div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <input type="text" name="detail" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="proContent-save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['form','laydate','jquery'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let MODULE_PATH = rootPath+"/ProContentController";
+		var laydate = layui.laydate;
+        //同时绑定多个
+        lay('.datetime-input').each(function(){
+          laydate.render({
+            elem: this
+            ,trigger: 'click'
+            ,type: 'datetime'
+          });
+        });
+        //保存
+        form.on('submit(proContent-save)', function (data) {
+            $.ajax({
+                url: MODULE_PATH+'/add',
+                data: data.field,
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded',
+                type: 'post',
+                success: function (result) {
+                    if (result.code==200) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("proContent-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('重置密码')"/>
+    <link rel="stylesheet" th:href="@{/static/admin/css/other/login.css}" />
+</head>
+<!-- 代 码 结 构 -->
+<body th:background="@{/static/admin/images/login.svg}">
+<form class="layui-form" action="javascript:void(0);">
+    <th:block th:if=" ${page eq 0}">
+        <div id="breadcrumb" style="display: flex;flex-direction: row;justify-content: flex-start">
+
+            <span id="confirm"><i style="color: #00a0e9" title="Sample page 1">确认账号</i>
+                        </span>
+            <span style="margin-left: 20px;margin-right: 20px"><i class="fa fa-lg fa-angle-right"></i>
+                        </span>
+            <span id="reset"><i  style="color: #4d4d4c" title="Sample page 1">重置密码</i>
+                        </span>
+            <span style="margin-left: 20px;margin-right: 20px"><i class="fa fa-lg fa-angle-right"></i>
+                        </span>
+            <span id="result"><i  style="color: #4d4d4c" title="Sample page 1">重置成功</i>
+                        </span>
+        </div>
+        <hr>
+        <div class="layui-form-item">
+            <img class="logo" th:src="@{/static/admin/assets/images/logo.png}" />
+            <div class="title">我思文创</div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <p>账号<span style="color:#ff0000;">*</span></p>
+            <input name="username" type="text" placeholder="手机号" value="" hover class="layui-input" lay-verify="required|phone" />
+        </div>
+        <div class="layui-form-item">
+            <p>邮箱<span style="color:#ff0000;">*</span></p>
+            <input name="email" type="text" placeholder="邮箱" value="" hover class="layui-input" lay-verify="required|email" />
+        </div>
+        <div class="layui-form-item">
+            <input placeholder="验证码 : " name="captcha" hover class="code layui-input layui-input-inline"  />
+            <img th:src="@{/captcha/captchaImage?type=char}" class="codeImage" id="captchaImage"/>
+        </div>
+
+        <div class="layui-form-item">
+            <button class="pear-btn pear-btn-success sendEmail" lay-submit lay-filter="sendEmail">
+                发 送 邮 件
+            </button>
+        </div>
+    </th:block>
+    <th:block th:if=" ${page eq 1}">
+        <div id="breadcrumb" style="display: flex;flex-direction: row;justify-content: flex-start">
+
+
+            <span id="confirm"><i style="color: #4d4d4c" title="Sample page 1">确认账号</i>
+            </span>
+            <span style="margin-left: 20px;margin-right: 20px"><i class="fa fa-lg fa-angle-right"></i>
+                        </span>
+            <span id="reset"><i  style="color: #00a0e9" title="Sample page 1">重置密码</i>
+                        </span>
+            <span style="margin-left: 20px;margin-right: 20px"><i class="fa fa-lg fa-angle-right"></i>
+                        </span>
+            <span id="result"><i  style="color: #4d4d4c" title="Sample page 1">重置成功</i>
+                        </span>
+        </div>
+        <hr>
+        <div class="layui-form-item">
+            <img class="logo" th:src="@{}" />
+            <div class="title">我思文创</div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <p>密码<span style="color:#ff0000;">*</span></p>
+            <input id="password" name="password" type="password" placeholder="密码"  autocomplete="off" lay-verify="required|max20|min8|checkPwd"  hover class="layui-input"  />
+        </div>
+        <div class="layui-form-item">
+            <p>确认密码<span style="color:#ff0000;">*</span></p>
+            <input id="password2" name="password" type="password" placeholder="密码"  autocomplete="off" lay-verify="required|confirmPass" hover class="layui-input"  />
+        </div>
+        <div class="layui-form-item">
+            <p>邮箱验证码<span style="color:#ff0000;">*</span></p>
+            <input name="emailCode" type="text" placeholder="邮箱验证码 lay-verify="required" value="" hover class="layui-input"  />
+        </div>
+        <div class="layui-form-item">
+            <input placeholder="验证码 : " name="captcha" hover class="code layui-input layui-input-inline"  />
+            <img th:src="@{/captcha/captchaImage?type=char}" class="codeImage" id="captchaImage"/>
+        </div>
+
+        <div class="layui-form-item">
+            <button class="pear-btn pear-btn-success sendEmail" lay-submit lay-filter="sendEmail">
+                重 置 密 码
+            </button>
+        </div>
+    </th:block>
+    <!--   <th:block th:if=" ${page eq 2}">
+       </th:block>-->
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    var page=[[${page}]];
+    var te=0;
+    var url=[
+        rootPath+"/admin/confirm",
+        rootPath+"/admin/reset",
+        rootPath+"/admin/login"
+    ];
+
+    var viewUrl=rootPath+"/admin/forget";
+    var loginUrl=rootPath+"/admin/login";
+    layui.use(['form','jquery','layer'], function() {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let layer = layui.layer;
+
+        form.verify({
+            confirmPass:function(value){
+                if($('input[name=password]').val() !== value)
+                    return '两次密码输入不一致！';
+            },
+            checkPwd:[
+
+                /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$)^.{8,16}$/
+                ,"密码必须包含字母和数字"
+            ],
+            max20:function (value){
+                if(value>20){
+                    return '输入长度不能多于20';
+                }
+            },
+            min1:function (value){
+                if(value<1){
+                    return '输入长度不能少于1';
+                }
+            },
+            min8:function (value){
+                if(value<8){
+                    return '输入长度不能少于8';
+                }
+            }
+        });
+
+        form.on('submit(sendEmail)', function(data){
+            let loader = layer.load();
+            $(".sendEmail").html("<i class='layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading' />");
+            $.ajax({
+                url:url[page],
+                data:data.field,
+                type:"post",
+                dataType:'json',
+                success:function(result){
+                    layer.close(loader);
+                    console.info(data);
+
+                    if(result.code==200){
+                        if(page==0) {
+                            confirm();
+                        }else if(page==1){
+                            reset();
+                        }
+                    }else{
+                        layer.msg(result.msg,{icon:2,time:1000},function(){
+                            document.getElementById("captchaImage").src=rootPath+"/captcha/captchaImage?type=char&s="+Math.random();
+                        });
+                    }
+                    $(".login").html("登 入")
+                }
+            });
+            return false;
+        });
+
+        $("#captchaImage").click(function(){
+            document.getElementById("captchaImage").src=rootPath+"/captcha/captchaImage?type=char&s="+Math.random();
+        })
+        setInterval(function(){
+            document.getElementById("captchaImage").src=rootPath+"/captcha/captchaImage?type=char&s="+Math.random();
+        },30000);
+
+        validateKickout();
+
+    })
+    function reset() {
+        window.location.href=viewUrl+"?page=2";
+    }
+    function confirm() {
+        window.location.href=viewUrl+"?page=1";
+    }
+
+</script>
+<!-- Session 过期处理 -->
+<script>
+
+    if(window!=top){ top.location.href = location.href; }
+    function validateKickout() {
+        if (getParam("kickout") == 1) {
+            layer.alert("<font color='red'>您已在别处登录，请您修改密码或重新登录</font>", {
+                    icon: 0,
+                    title: "系统提示"
+                },
+                function(index) {
+                    //关闭弹窗
+                    layer.close(index);
+                });
+        }else if(getParam("sessionout") == 1){
+            layer.alert("<font color='red'>登录已过期，请重新登录</font>", {
+                    icon: 0,
+                    title: "系统提示"
+                },
+                function(index) {
+                    //关闭弹窗
+                    layer.close(index);
+                });
+        }
+    }
+
+    function getParam(paramName) {
+        var reg = new RegExp("(^|&)" + paramName + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURI(r[2]);
+        return null;
+    }
+
+</script>
+
+</body>
+</html>

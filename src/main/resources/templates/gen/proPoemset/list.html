@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:include="include :: header('诗词作品章节列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="searchText" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="proPoemset-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="proPoemset-table" lay-filter="proPoemset-table"></table>
+    </div>
+</div>
+</body>
+
+<script type="text/html" id="proPoemset-toolbar">
+    <!--    <button shiro:hasPermission="gen:proCharpt:add" class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+            <i class="layui-icon layui-icon-add-1"></i>
+             新增
+        </button>
+        <button shiro:hasPermission="gen:proCharpt:remove" class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+            <i class="layui-icon layui-icon-delete"></i>
+            删除
+        </button>-->
+</script>
+
+<script type="text/html" id="proPoemset-bar">
+    <button shiro:hasPermission="gen:proPoemset:finish" class="pear-btn  pear-btn-sm layui-bg-blue" lay-event="finish" title="完成"><i class="layui-icon layui-icon-ok layui-bg-blue"></i>
+    </button>
+    <button shiro:hasPermission="gen:proPoemset:view" class="pear-btn pear-btn-warming pear-btn-sm" lay-event="view" title="查看"><i class="layui-icon layui-icon-template"></i>
+    </button>
+</script>
+
+
+<script type="text/html" id="proPoemset-type">
+    {{#if (d.dataState == '0') { }}
+    <span class="layui-badge layui-bg-orange">开启</span>
+    {{# }else if(d.dataState == '-1'){ }}
+    <span class="layui-badge layui-bg-blue">关闭</span>
+    {{# } }}
+</script>
+<script type="text/html" id="root-type">
+    {{#if (d.root == 1) { }}
+    <span class="layui-badge">章节</span>
+    {{# }else if(d.root == 0){ }}
+    <span class="layui-badge layui-bg-orange">命题</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="lock-type">
+    {{#if (d.isLock == 1) { }}
+    <span class="layui-badge layui-bg-red">是</span>
+    {{# }else if(d.isLock == 0){ }}
+    <span class="layui-badge layui-bg-blue">否</span>
+    {{# } }}
+</script>
+
+
+
+<script type="text/html" id="finish-type">
+    {{#if (d.finish == 0) { }}
+    <span class="layui-badge layui-bg-orange">创作中</span>
+    {{# }else if(d.finish == 1){ }}
+    <span class="layui-badge layui-bg-blue">完成</span>
+    {{# }else if(d.finish == -1){ }}
+    <span class="layui-badge layui-bg-gray">编辑</span>
+    {{# } }}
+</script>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let MODULE_PATH3 = rootPath+"/ProPoetryContentController/";
+        let MODULE_PATH = rootPath+"/ProPoemsetController/";
+        let cols = [
+            [
+                /* {type: 'checkbox'},*/
+
+                {title: '编号', field: 'id', align: 'center'},
+
+                {title: '题', field: 'charpter', align: 'center',minWidth: 200},
+
+                /*{title: '介绍', field: 'introduce', align: 'center'},*/
+
+                /*{title: '图片', field: 'pic', align: 'center'},*/
+
+                /*{title: '创作要求', field: 'requirement', align: 'center'},*/
+
+                /*{title: '类型', field: 'chapType', align: 'center'},*/
+
+                /*{title: '标签', field: 'label', align: 'center'},*/
+
+                {title: '创作数', field: 'creators',width: 100, align: 'center'},
+
+                {title: '篇章', field: 'root',width: 80, align: 'center',toolbar: '#root-type'},
+
+                /*{title: '章节编号', field: 'rootId', align: 'center'},*/
+
+                {title: '作品编号', field: 'bookId',width: 150, align: 'center'},
+
+                /*	{title: '关联绘画编号', field: 'paintId', align: 'center'},
+
+                    {title: '关联诗歌编号', field: 'poemId', align: 'center'},*/
+
+                /*{title: '主序号', field: 'rootOrd', align: 'center'},*/
+
+                {title: '序号', field: 'ord',width: 50, align: 'center'},
+
+                {title: '锁', field: 'isLock', width: 50,align: 'center',toolbar: '#lock-type'},
+
+                {title: '完成', field: 'finish', align: 'center',toolbar: '#finish-type'},
+
+                /*{title: '创建人Id', field: 'createBy', align: 'center'},*/
+
+                {title: '创建时间', field: 'createDat', align: 'center'},
+
+                /*{title: '最后更新时间', field: 'lUpdateDat', align: 'center'},
+
+                {title: '删除', field: 'isDel', align: 'center'},
+
+                {title: '', field: 'number', align: 'center'},*/
+
+
+                {title: '操作', toolbar: '#proPoemset-bar', align: 'center'}
+            ]
+        ]
+
+        //table表单列表
+        table.render({
+            elem: '#proPoemset-table',
+            url: MODULE_PATH + 'list',
+            page: true,
+            method: 'get',
+            cols: cols,
+            skin: 'line',
+            toolbar: '#proPoemset-toolbar',
+            defaultToolbar: [{
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+        //table图标事件绑定
+        table.on('tool(proPoemset-table)', function (obj) {
+            if (obj.event === 'finish') {
+                window.finish(obj);
+            } else if (obj.event === 'view') {
+                window.view(obj);
+            }
+        });
+
+        //table工具栏绑定
+        table.on('toolbar(proPoemset-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        //查询按钮绑定
+        form.on('submit(proPoemset-query)', function (data) {
+            table.reload('proPoemset-table', {where: data.field})
+            return false;
+        });
+
+
+        //添加
+        window.view = function (obj) {
+            window.location.href=MODULE_PATH3 + 'view3?no=' + obj.data['id'];
+        }
+        //修改
+        window.edit = function (obj) {
+            layer.open({
+                type: 2,
+                title: '修改',
+                shade: 0.1,
+                area: ['500px', '500px'],
+                content: MODULE_PATH + 'edit/' + obj.data['id']
+            });
+        }
+        //删除
+        window.finish = function (obj) {
+            layer.confirm('确定要完成该命题', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "finish?ids=" + obj.data['id'],
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                table.reload('proPoemset-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        //批量删除
+        window.batchRemove = function (obj) {
+            let data = table.checkStatus(obj.config.id).data;
+            if (data.length === 0) {
+                layer.msg("未选中数据", {icon: 3, time: 1000});
+                return false;
+            }
+            let ids = "";
+            for (let i = 0; i < data.length; i++) {
+                ids += data[i].id + ",";
+            }
+            ids = ids.substr(0, ids.length - 1);
+            layer.confirm('确定要删除这些数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                table.reload('proPoemset-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+        //刷新按钮
+        window.refresh = function () {
+            table.reload('proPoemset-table');
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,15 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "W778CHZ44X.vvvpurec.ithink",
+                "paths": ["/app/*"]
+             },
+            {
+                "appID": "W778CHZ44X.vvvpurec.ithink",
+                "paths": [/qq_conn/1111733487/*"]
+            }
+        ]
+    }
+}

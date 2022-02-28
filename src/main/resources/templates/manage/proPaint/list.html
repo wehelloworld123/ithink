@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:include="include :: header('绘画创作集列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">卷名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="searchText" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="proPaint-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="proPaint-table" lay-filter="proPaint-table"></table>
+    </div>
+</div>
+</body>
+
+<script type="text/html" id="proPaint-toolbar">
+    <button shiro:hasPermission="gen:proPaint:remove" class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </button>
+</script>
+
+
+
+<script type="text/html" id="proPaint-bar">
+    <button shiro:hasPermission="gen:proPaintManage:view" class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit" title="浏览"><i class="layui-icon layui-icon-read"></i>
+    </button>
+    <button shiro:hasPermission="gen:proPaintManage:look" class="pear-btn pear-btn-warming pear-btn-sm" lay-event="look" title="查看"><i class="layui-icon layui-icon-template"></i>
+    </button>
+    <button shiro:hasPermission="gen:proPaintManage:remove" class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove" title="删除"><i class="layui-icon layui-icon-delete"></i>
+    </button>
+</script>
+<script type="text/html" id="finSection-type">
+
+    <span class="">{{d.finSection +'/'+ d.section}}</span>
+
+</script>
+<script type="text/html" id="finCharp-type">
+
+    <span class="">{{d.finCharp +'/'+ d.charpter}}</span>
+
+</script>
+<script type="text/html" id="isTop-type">
+    {{#if (d.isTop == 1) { }}
+    <span class="layui-badge layui-bg-blue">置顶</span>
+    {{# } }}
+</script>
+<script type="text/html" id="del-type">
+    {{#if (d.isDel == 0) { }}
+    <span class="layui-badge layui-bg-blue">否</span>
+    {{# }else if(d.isDel == 1){ }}
+    <span class="layui-badge layui-bg-danger">是</span>
+    {{# } }}
+</script>
+<script type="text/html" id="finish-type">
+
+    {{#if (d.finish == 1) { }}
+    <span class="layui-badge layui-bg-blue">已完成</span>
+    {{# }else if(d.finish == 0){ }}
+    <span class="layui-badge layui-bg-gray">创作中</span>
+    {{# }else if(d.finish == -2){ }}
+    <span class="layui-badge layui-bg-orange">审核中</span>
+    {{# }else if(d.finish == -1){ }}
+    <span class="layui-badge layui-bg-red">未完成</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="proPaint-type">
+    {{#if (d.dataState == '0') { }}
+    <span class="layui-badge layui-bg-orange">开启</span>
+    {{# }else if(d.dataState == '-1'){ }}
+    <span class="layui-badge layui-bg-blue">关闭</span>
+    {{# } }}
+</script>
+
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        let MODULE_PATH = rootPath+"/ProPaintManageController/";
+        let MODULE_PATH3 = rootPath+"/ProPaintPartManageController/";
+        let cols = [
+            [
+                {type: 'checkbox'},
+
+                {title: '编号', field: 'uid', align: 'center',minWidth: 160},
+
+                {title: '集名', field: 'seter', align: 'center',width: 100},
+
+                {title: '名称', field: 'name', align: 'center',minWidth: 120},
+
+                /*				{title: '封面', field: 'cover', align: 'center'},
+
+                                {title: '二维码', field: 'qrCode', align: 'center'},
+
+                                {title: '展示图', field: 'exhibition', align: 'center'},*/
+
+                {title: '主旨', field: 'topic', align: 'center'},
+
+                {title: '用途', field: 'purpose', align: 'center'},
+
+               /* {title: '描述', field: 'description', align: 'center'},*/
+
+                /*{title: '评分', field: 'rate', align: 'center'},
+
+                {title: '类别', field: 'kind', align: 'center'},
+
+                {title: '章节', field: 'charpter', align: 'center'},
+
+                {title: '小节', field: 'section', align: 'center'},
+
+                {title: '完成章节', field: 'finCharpter', align: 'center',toolbar: '#finCharp-type'},
+*/
+                {title: '完成命题', field: 'finSection', align: 'center',toolbar: '#finSection-type',width: 80},
+
+                /*	{title: '形式', field: 'form', align: 'center'},
+
+                    {title: '创作者', field: 'partner', align: 'center'},
+
+                    {title: '浏览量', field: 'views', align: 'center'},*/
+
+                {title: '版权(%)', field: 'copyright', align: 'center',width: 50},
+
+                {title: '版费(￥)', field: 'reward', align: 'center',width: 80},
+
+                {title: '期限', field: 'deadline', align: 'center',width: 100},
+
+                /*{title: '出品方', field: 'publisher', align: 'center'},*/
+
+                {title: '置顶', field: 'isTop', align: 'center',toolbar: '#isTop-type',width: 50},
+
+                {title: '删除', field: 'isDel', align: 'center',toolbar: '#del-type'},
+
+                {title: '完成', field: 'finish', align: 'center',toolbar: '#finish-type',width: 80},
+
+                /*{title: '创建人Id', field: 'createBy', align: 'center'},
+
+                {title: '创建时间', field: 'createDat', align: 'center'},
+
+                {title: '最后更新时间', field: 'lUpdateDat', align: 'center'},
+
+                {title: '删除', field: 'isDel', align: 'center'},
+
+                {title: '来源', field: 'source', align: 'center'},
+
+                {title: '交流群', field: 'contract', align: 'center'},
+
+                {title: '介绍', field: 'introduce', align: 'center'},*/
+
+
+                {title: '操作', toolbar: '#proPaint-bar', align: 'center',width: 200}
+            ]
+        ]
+
+        //table表单列表
+        table.render({
+            elem: '#proPaint-table',
+            url: MODULE_PATH + 'list',
+            page: true,
+            method: 'get',
+            cols: cols,
+            skin: 'line',
+            toolbar: '#proPaint-toolbar',
+            defaultToolbar: [{
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+        //table图标事件绑定
+        table.on('tool(proPaint-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }else if (obj.event === 'view') {
+                window.view(obj);
+            }else if (obj.event === 'look') {
+                window.look(obj);
+            }
+        });
+
+        //table工具栏绑定
+        table.on('toolbar(proPaint-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+
+
+        //查询按钮绑定
+        form.on('submit(proPaint-query)', function (data) {
+            table.reload('proPaint-table', {where: data.field})
+            return false;
+        });
+
+
+        //完成
+        window.finish = function (obj) {
+            layer.confirm('确定要完成该作品', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "finish?ids=" + obj.data['uid'],
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {;
+                                table.reload('proPaint-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        //上线
+        window.apply = function (obj) {
+            layer.open({
+                type: 2,
+                title: '上线',
+                shade: 0.1,
+                area: ['700px', '580px'],
+                content: MODULE_PATH + 'auth/' + obj.data['uid']
+            });
+        }
+
+
+        //作品章节
+        window.look = function (obj) {
+            window.location.href=MODULE_PATH3 + 'view2?uid=' + obj.data['uid'];
+        }
+        //添加
+        window.add = function () {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shade: 0.1,
+                area: ['700px', '580px'],
+                content: MODULE_PATH + 'add'
+            });
+        }
+
+        //修改
+        window.edit = function (obj) {
+            layer.open({
+                type: 2,
+                title: '详情',
+                shade: 0.1,
+                area: ['100%', '100%'],
+                content: MODULE_PATH + 'edit/' + obj.data['uid']
+            });
+        }
+        //删除
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + obj.data['uid'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                table.reload('proPaint-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        //批量删除
+        window.batchRemove = function (obj) {
+            let data = table.checkStatus(obj.config.id).data;
+            if (data.length === 0) {
+                layer.msg("未选中数据", {icon: 3, time: 1000});
+                return false;
+            }
+            let ids = "";
+            for (let i = 0; i < data.length; i++) {
+                ids += data[i].uid + ",";
+            }
+            ids = ids.substr(0, ids.length - 1);
+            layer.confirm('确定要删除这些数据', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove?ids=" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.code==200) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                table.reload('proPaint-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+        //刷新按钮
+        window.refresh = function () {
+            table.reload('proPaint-table');
+        }
+    })
+</script>
+</html>
